@@ -10,7 +10,7 @@ export interface Match {
     mapId: number,
     objectId: string,
     players: [{
-        battleTaq: string,
+        battleTag: string,
         id: string,
         inviteName: string,
         mmr: Mmr,

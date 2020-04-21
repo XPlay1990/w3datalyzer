@@ -8,11 +8,11 @@ interface TimesAgainstRace {
     undead: number
 }
 
-interface MapStatistic {
+export interface MapStatistic {
     total: number,
     won: number,
     lost: number,
-    raceStats: RaceStatistic
+    raceStats: RaceStatisticList
 }
 
 interface RaceStatisticList {
@@ -49,8 +49,15 @@ export function useCalculateStatistics(playerBattleTag: string) {
 
     function calculateMatchStatistics(matchList: Match[]) {
         let host = {hosted: 0, notHosted: 0}
-        let mapMap = new Map()
+        let mapMap = new Map<string, MapStatistic>()
         let gameTimes = 0
+        let raceStatistic: RaceStatisticList = {
+            rdm: {total: 0, won: 0, lost: 0},
+            orc: {total: 0, won: 0, lost: 0},
+            undead: {total: 0, won: 0, lost: 0},
+            elf: {total: 0, won: 0, lost: 0},
+            human: {total: 0, won: 0, lost: 0}
+        }
         for (let match of matchList) {
             if (match.state === 2) {
                 let gameTime = ((match.endTime - match.startTime) / 1000) / 60
@@ -58,27 +65,65 @@ export function useCalculateStatistics(playerBattleTag: string) {
                 //MapStats
                 const slashIndex = match.map.lastIndexOf('/');
                 const mapName = match.map.substring(slashIndex + 1).replace('.w3x', '');
-                mapMap.set(mapName, mapMap.get(mapName) ? mapMap.get(mapName) + 1 : 1)
+                // mapMap.set(mapName, mapMap.get(mapName) ? mapMap.get(mapName) + 1 : 1)
+                let mapStatistic = mapMap.get(mapName)
+                if (!mapStatistic) {
+                    mapStatistic = {
+                        total: 0,
+                        won: 0,
+                        lost: 0,
+                        raceStats: {
+                            elf: {total: 0, won: 0, lost: 0},
+                            rdm: {total: 0, won: 0, lost: 0},
+                            undead: {total: 0, won: 0, lost: 0},
+                            orc: {total: 0, won: 0, lost: 0},
+                            human: {total: 0, won: 0, lost: 0}
+                        }
+                    }
+                }
+
+                mapStatistic.total += 1
 
                 //RaceStats
                 for (const player of match.players) {
-                    if (player.battleTaq !== playerBattleTag) {
+                    if (player.battleTag !== playerBattleTag) {
+                        player.won ? mapStatistic.lost += 1 : mapStatistic.won += 1
                         // player.battleTaq
                         switch (player.race) {
                             case 0:
                                 //rdm
+                                raceStatistic.rdm.total += 1
+                                player.won ? raceStatistic.rdm.lost += 1 : raceStatistic.rdm.won += 1
+                                mapStatistic.raceStats.rdm.total += 1
+                                player.won ? mapStatistic.raceStats.rdm.lost += 1 : mapStatistic.raceStats.rdm.won += 1
                                 break;
                             case 1:
                                 //human
+                                raceStatistic.human.total += 1
+                                player.won ? raceStatistic.human.lost += 1 : raceStatistic.human.won += 1
+                                mapStatistic.raceStats.human.total += 1
+                                player.won ? mapStatistic.raceStats.human.lost += 1 : mapStatistic.raceStats.human.won += 1
                                 break;
                             case 2:
                                 //orc
+                                raceStatistic.orc.total += 1
+                                player.won ? raceStatistic.orc.lost += 1 : raceStatistic.orc.won += 1
+                                mapStatistic.raceStats.orc.total += 1
+                                player.won ? mapStatistic.raceStats.orc.lost += 1 : mapStatistic.raceStats.orc.won += 1
                                 break;
                             case 4:
                                 //elf
+                                raceStatistic.elf.total += 1
+                                player.won ? raceStatistic.elf.lost += 1 : raceStatistic.elf.won += 1
+                                mapStatistic.raceStats.elf.total += 1
+                                player.won ? mapStatistic.raceStats.elf.lost += 1 : mapStatistic.raceStats.elf.won += 1
                                 break;
                             case 8: //wtf pad
                                 //undead
+                                raceStatistic.undead.total += 1
+                                player.won ? raceStatistic.undead.lost += 1 : raceStatistic.undead.won += 1
+                                mapStatistic.raceStats.undead.total += 1
+                                player.won ? mapStatistic.raceStats.undead.lost += 1 : mapStatistic.raceStats.undead.won += 1
                                 break
                         }
                         // player.won
@@ -87,9 +132,10 @@ export function useCalculateStatistics(playerBattleTag: string) {
 
                 //Hosted Stats
                 (match.host === playerBattleTag) ? host.hosted = host.hosted + 1 : host.notHosted = host.notHosted + 1
+                mapMap.set(mapName, mapStatistic)
             }
         }
-        return {map: mapMap, race: null, host: host, avgGameTime: (gameTimes / matchList.length)}
+        return {map: mapMap, race: raceStatistic, host: host, avgGameTime: (gameTimes / matchList.length)}
     }
 
     useEffect(() => {
