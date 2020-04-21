@@ -1,59 +1,35 @@
 import React from 'react';
+import {Route, Switch, withRouter} from 'react-router-dom';
+import {createMuiTheme, responsiveFontSizes, ThemeProvider} from "@material-ui/core/styles";
 import './App.css';
-import {useCalculateStatistics} from "./util/CalculateStatistics";
-import {Bar} from "react-chartjs-2";
-import {Grid} from "@material-ui/core";
-import {chartColors} from "./util/ChartColors";
+import {CssBaseline} from "@material-ui/core";
+import {APP_PATH_LandingPage, APP_PATH_STATISTICS, FORBIDDEN_URL} from "./resources/AppConstants";
+import Forbidden from "./error/Forbidden";
+import NotFound from "./error/NotFound";
+import Statistics from "./Statistics";
+import LandingPage from "./LandingPage";
 
 function App() {
-    const playerMatchData = useCalculateStatistics()
-
-    let mapOptions = createMapChartOptions(playerMatchData)
-
+    let theme = createMuiTheme({
+        palette: {
+            type: false ? 'dark' : 'light', // mediaquery on dark theme
+            // primary: {main: blue[500]},
+            // secondary: red,
+        },
+    });
+    theme = responsiveFontSizes(theme);
 
     return (
-        <div className="App">
-            <Grid container spacing={3}>
-                <Grid item sm={6}>
-                    <Bar data={mapOptions.data} options={mapOptions.options}/>
-                </Grid>
-            </Grid>
-        </div>
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <Switch>
+                <Route path={`${APP_PATH_STATISTICS}/:battleTag`} component={Statistics}/>
+                <Route path={FORBIDDEN_URL} component={Forbidden}/>
+                <Route path={APP_PATH_LandingPage} render={() => <LandingPage/>}/>
+                <Route component={NotFound}/>
+            </Switch>
+        </ThemeProvider>
     );
 }
 
-function createMapChartOptions(playerMatchData: any) {
-    let mapChartData = {
-        keys: playerMatchData ? Array.from(playerMatchData.statistics.mapStatistics.keys()) : [],
-        values: playerMatchData ? Array.from(playerMatchData.statistics.mapStatistics.values()) : []
-    }
-    const data = {
-        labels: mapChartData.keys,
-        datasets: [
-            {
-                label: 'MapStatistics',
-                backgroundColor: chartColors('warm', mapChartData.keys.length, 'bar'),
-                data: mapChartData.values
-            }
-        ]
-    };
-    const options = {
-        legend: {
-            display: true
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        },
-        title: {
-            display: true,
-            text: 'Map Statistics'
-        }
-    }
-    return {data: data, options: options}
-}
-
-export default App;
+export default withRouter(App);

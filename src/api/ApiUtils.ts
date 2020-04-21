@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 export interface Match {
     createdAt: Date,
-    endTime: Date,
+    endTime: number,
     gameMode: number, //1=1n1?
     gateway: number, //20=EU
     host: string,
@@ -21,7 +21,7 @@ export interface Match {
         won: boolean
     }],
     publicGame: boolean,
-    startTime: Date,
+    startTime: number,
     state: number,
     updatedAt: Date
 }
@@ -41,8 +41,7 @@ interface Ranking {
     rp: number
 }
 
-export function useFetchMatchData() {
-    const playerTag = "XlorD#2596"
+export function useFetchMatchData(battleTag:string) {
     const limit = 100
     const offset = 0
     const headers = new Headers()
@@ -54,7 +53,7 @@ export function useFetchMatchData() {
         headers: headers
     }
 
-    return useFetch(options, limit, offset, `https://api.w3champions.com/player/${encodeURIComponent(playerTag)}/match`)
+    return useFetch(options, limit, offset, `https://api.w3champions.com/player/${encodeURIComponent(battleTag)}/match`)
 }
 
 
