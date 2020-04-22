@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import './App.css';
-import {Button, TextField} from "@material-ui/core";
+import {Box, Button, TextField} from "@material-ui/core";
 import SendIcon from '@material-ui/icons/Send';
 import {fetchBattleTagCandidates} from "./api/ApiUtils";
 import './LandingPage.css'
 import {useHistory} from "react-router-dom";
 import {APP_PATH_STATISTICS} from "./resources/AppConstants";
 import ReactGA from 'react-ga';
-import {Simulate} from "react-dom/test-utils";
 
 interface Suggestion {
     mmr: { rating: number },
@@ -36,10 +35,10 @@ function LandingPage() {
     }, [playerTag]);
 
     return (
-        <div>
+        <Box display={"flex"} flexDirection={"row"}>
             <Autocomplete
                 id="playerTag"
-                style={{width: 300}}
+                style={{width: 300, marginRight: "50px"}}
                 options={suggestions}
                 debug
                 autoHighlight
@@ -85,7 +84,7 @@ function LandingPage() {
                     history.push(`${APP_PATH_STATISTICS}/${encodeURIComponent(playerTag)}`)
                 }}
             >Send</Button>
-        </div>
+        </Box>
     );
 }
 
