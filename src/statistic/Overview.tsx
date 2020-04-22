@@ -8,8 +8,8 @@ import {Bar} from "react-chartjs-2";
 function Overview(statistic: any) {
     const headers = ['stat', 'value']
     const dataMap = new Map()
-    dataMap.set("avg game time", statistic.statistic.statistics? statistic.statistic.statistics.avgGameTime : null)
-    dataMap.set("percentage of games hosted", statistic.statistic.statistics? (statistic.statistic.statistics.host.hostedPercentage + "%") : null)
+    dataMap.set("avg game time", statistic.statistic.statistics ? statistic.statistic.statistics.avgGameTime : null)
+    dataMap.set("percentage of games hosted", statistic.statistic.statistics ? (statistic.statistic.statistics.host.hostedPercentage + "%") : null)
 
     const mapOptions = createMapChartOptions(statistic.statistic)
 
@@ -61,13 +61,13 @@ function createMapChartOptions(statisticData: any) {
         },
         title: {
             display: true,
-            text: 'Map Statistics'
+            text: ['Map statistics', 'How often you played on map x']
         }
     }
     return {data: data, options: options}
 }
 
-function createOverviewTableData(statisticData: any){
+function createOverviewTableData(statisticData: any) {
 
 }
 

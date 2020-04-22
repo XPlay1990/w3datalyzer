@@ -59,7 +59,7 @@ function raceWinrateChart(raceStats: RaceStatisticList | null) {
         },
         title: {
             display: true,
-            text: 'Race Winrate'
+            text: 'Your winrate percentage against race x'
         }
     }
 
@@ -95,7 +95,7 @@ function createRaceWinrateCharts(raceStats: RaceStatisticList | null) {
             },
             title: {
                 display: true,
-                text: "vs " + raceStat[0]
+                text: "win/loss-ratio vs " + raceStat[0]
             }
         }
         const data = {

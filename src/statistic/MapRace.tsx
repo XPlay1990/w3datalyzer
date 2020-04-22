@@ -35,7 +35,7 @@ function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
                 },
                 title: {
                     display: true,
-                    text: mapName + " vs " + raceStatistic[0]
+                    text: "win/loss-ratio on " + mapName + " vs " + raceStatistic[0]
                 }
             }
             const data = {

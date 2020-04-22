@@ -55,7 +55,7 @@ function createMapWinrateOverviewChart(mapStatisticsList: Map<string, MapStatist
         },
         title: {
             display: true,
-            text: 'Map Winrate'
+            text: "Your winrate percentage on maps",
         }
     }
 
@@ -89,7 +89,7 @@ function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
             },
             title: {
                 display: true,
-                text: mapName
+                text: "Win/lose-ratio on " + mapName
             }
         }
         const data = {
