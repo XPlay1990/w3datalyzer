@@ -36,7 +36,8 @@ export interface Statistic {
     race: RaceStatisticList,
     host: { hosted: number, notHosted: number, hostedPercentage: string },
     avgGameTime: string,
-    versus: Map<string, VersusObject>
+    versus: Map<string, VersusObject>,
+    mmrArray: Number[]
 }
 
 interface VersusObject {
@@ -81,6 +82,7 @@ export function useCalculateStatistics(playerBattleTag: string) {
             human: {total: 0, won: 0, lost: 0, winrate: 0}
         }
         let versusMap = new Map()
+        let mmrArray = []
         for (let match of matchList) {
             if (match.state === 2) {
                 let gameTime = ((match.endTime - match.startTime) / 1000) / 60
@@ -168,6 +170,9 @@ export function useCalculateStatistics(playerBattleTag: string) {
                                 break
                         }
                         // player.won
+                    } else {
+                        // searched player
+                        mmrArray.push(player.mmr.rating)
                     }
                 }
 
@@ -197,7 +202,8 @@ export function useCalculateStatistics(playerBattleTag: string) {
             race: raceStatisticList,
             host: host,
             avgGameTime: ((gameTimes / matchList.length).toFixed(2) + " min"),
-            versus: versusMap
+            versus: versusMap,
+            mmrArray: mmrArray.reverse()
         } as Statistic
     }
 

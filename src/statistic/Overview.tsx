@@ -3,7 +3,7 @@ import CustomTable, {CustomVersusTable} from "../util/CustomTable";
 import {MapStatistic} from "../util/CalculateStatistics";
 import {chartColors} from "../util/ChartColors";
 import {Grid} from "@material-ui/core";
-import {Bar} from "react-chartjs-2";
+import {Bar, Line} from "react-chartjs-2";
 
 function Overview(statistic: any) {
     const headers = ['stat', 'value']
@@ -14,6 +14,8 @@ function Overview(statistic: any) {
 
     const mapOptions = createMapChartOptions(statistic.statistic)
 
+    const mmrChart = createMMrChart(statistic.statistic.statistics ? statistic.statistic.statistics.mmrArray : [])
+
     return (
         <Grid container spacing={3}>
             <Grid item sm={6}>
@@ -23,13 +25,53 @@ function Overview(statistic: any) {
                 <CustomTable headers={headers} data={dataMap}/>
             </Grid>
             <Grid item sm={6}>
-            <CustomVersusTable headers={versusHeaders}
-                               data={statistic.statistic.statistics ? statistic.statistic.statistics.versus : null}/>
+                <CustomVersusTable headers={versusHeaders}
+                                   data={statistic.statistic.statistics ? statistic.statistic.statistics.versus : null}/>
             </Grid>
+            {mmrChart}
         </Grid>
     )
 }
 
+function createMMrChart(mmrArray: Number[]) {
+    const data = {
+        labels: mmrArray,
+        datasets: [
+            {
+                fill: false,
+                label: 'mmr over time',
+                backgroundColor: chartColors('warm', mmrArray.length, 'line'),
+                data: mmrArray
+            }
+        ]
+    };
+    const options = {
+        legend: {
+            display: false
+        },
+        scales: {
+            // yAxes: [{
+            //     ticks: {
+            //         beginAtZero: true
+            //     }
+            // }],
+            xAxes: [{
+                ticks: {
+                    display: false //this will remove only the label
+                }
+            }]
+        },
+        title: {
+            display: true,
+            text: 'Your mmr over time'
+        }
+    }
+    return (
+        <Grid item sm={6}>
+            <Line data={data} options={options}/>
+        </Grid>
+    )
+}
 
 function createMapChartOptions(statisticData: any) {
     let mapChartData = {
