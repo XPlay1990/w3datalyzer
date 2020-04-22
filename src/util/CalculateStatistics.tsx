@@ -15,7 +15,7 @@ export interface MapStatistic {
     raceStats: RaceStatisticList
 }
 
-interface RaceStatisticList {
+export interface RaceStatisticList {
     rdm: RaceStatistic,
     human: RaceStatistic,
     elf: RaceStatistic,
@@ -29,14 +29,26 @@ interface RaceStatistic {
     total: number
 }
 
+export interface Statistic {
+    map: Map<string, MapStatistic>,
+    race: RaceStatisticList,
+    host: { hosted: number, notHosted: number },
+    avgGameTime: number
+}
+
+export interface Output {
+    total: number,
+    statistics: Statistic | undefined
+}
+
 export function useCalculateStatistics(playerBattleTag: string) {
     const playerMatchDataResponseList = useFetchMatchData(playerBattleTag)
-    const [statisticValues, setStatisticValues] = useState()
+    const [statisticValues, setStatisticValues] = useState<Output>({total: 0, statistics: undefined})
 
     function calculateStatisticValues() {
         if (playerMatchDataResponseList.length > 0) {
             let playerMatchList: Match[] = []
-            const totalGames = playerMatchDataResponseList[0].total
+            const totalGames = playerMatchDataResponseList[0].total as number
             for (let response of playerMatchDataResponseList) {
                 playerMatchList = playerMatchList.concat(response.items)
             }
@@ -86,9 +98,8 @@ export function useCalculateStatistics(playerBattleTag: string) {
 
                 //RaceStats
                 for (const player of match.players) {
-                    if (player.battleTag !== playerBattleTag) {
+                    if (player.battleTag.toLowerCase() !== playerBattleTag.toLowerCase()) {
                         player.won ? mapStatistic.lost += 1 : mapStatistic.won += 1
-                        // player.battleTaq
                         switch (player.race) {
                             case 0:
                                 //rdm
@@ -135,7 +146,7 @@ export function useCalculateStatistics(playerBattleTag: string) {
                 mapMap.set(mapName, mapStatistic)
             }
         }
-        return {map: mapMap, race: raceStatistic, host: host, avgGameTime: (gameTimes / matchList.length)}
+        return {map: mapMap, race: raceStatistic, host: host, avgGameTime: (gameTimes / matchList.length)} as Statistic
     }
 
     useEffect(() => {

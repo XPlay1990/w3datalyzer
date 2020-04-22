@@ -1,4 +1,5 @@
 import {useEffect, useState} from 'react';
+
 export interface Match {
     createdAt: Date,
     endTime: number,
@@ -41,7 +42,22 @@ interface Ranking {
     rp: number
 }
 
-export function useFetchMatchData(battleTag:string) {
+export function useFetchBattleTagCandidates(partialBattleTag: string) {
+    const limit = 5
+    const headers = new Headers()
+    headers.append("Content-Type", "application/json");
+
+    const options = {
+        url: `https://api.w3champions.com/leagues/20/find-player/${partialBattleTag}/?limit=${limit}`,
+        method: 'GET',
+        mode: 'cors' as RequestMode,
+        headers: headers
+    }
+
+    return useFetch(options)
+}
+
+export function useFetchMatchData(battleTag: string) {
     const limit = 100
     const offset = 0
     const headers = new Headers()
@@ -53,11 +69,11 @@ export function useFetchMatchData(battleTag:string) {
         headers: headers
     }
 
-    return useFetch(options, limit, offset, `https://api.w3champions.com/player/${encodeURIComponent(battleTag)}/match`)
+    return useFetchMatchApi(options, limit, offset, `https://api.w3champions.com/player/${encodeURIComponent(battleTag)}/match`)
 }
 
 
-function useFetch(options: any, limit: number, offset: number, baseUrl: string) {
+function useFetchMatchApi(options: any, limit: number, offset: number, baseUrl: string) {
     const [data, setData] = useState<any[]>([]);
 
     // const [loading, setLoading] = useState(true);
@@ -77,6 +93,23 @@ function useFetch(options: any, limit: number, offset: number, baseUrl: string) 
             matchCount = json.total
         }
         setData(matchData)
+    }
+
+    useEffect(() => {
+        fetchUrl();
+    }, []);
+    // return [data, loading];
+    return data;
+}
+
+function useFetch(options: any) {
+    const [data, setData] = useState<any[]>([]);
+
+    // const [loading, setLoading] = useState(true);
+    async function fetchUrl() {
+        const response = await fetch(options.url, options);
+        const json = await response.json();
+        setData(json)
     }
 
     useEffect(() => {

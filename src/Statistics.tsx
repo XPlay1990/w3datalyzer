@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import {MapStatistic, useCalculateStatistics} from "./util/CalculateStatistics";
+import {MapStatistic, RaceStatisticList, useCalculateStatistics} from "./util/CalculateStatistics";
 import {Bar, Pie} from "react-chartjs-2";
-import {Grid} from "@material-ui/core";
+import {Grid, Paper, Typography} from "@material-ui/core";
 import {chartColors} from "./util/ChartColors";
 
 function Statistics(props: any) {
@@ -10,7 +10,16 @@ function Statistics(props: any) {
     const statisticData = useCalculateStatistics(battleTag)
 
     let mapOptions = createMapChartOptions(statisticData)
-    const mapWinrateCharts = createMapWinrateCharts(statisticData ? statisticData.statistics.map : new Map<string, MapStatistic>())
+    const mapWinrateCharts = createMapWinrateCharts(
+        statisticData ?
+            (statisticData.statistics ?
+                statisticData.statistics.map : new Map<string, MapStatistic>()) : new Map<string, MapStatistic>()
+    )
+    const raceWinrateCharts = createRaceWinrateCharts(
+        statisticData ?
+            (statisticData.statistics ?
+                statisticData.statistics.race : null) : null
+    )
 
     console.log("statisticData")
     console.log(statisticData)
@@ -21,7 +30,9 @@ function Statistics(props: any) {
                 <Grid item sm={6}>
                     <Bar data={mapOptions.data} options={mapOptions.options}/>
                 </Grid>
-                {mapWinrateCharts}
+                {mapWinrateCharts.mapChartArray}
+                {mapWinrateCharts.raceMapChartArray}
+                {raceWinrateCharts}
             </Grid>
         </div>
     );
@@ -29,8 +40,8 @@ function Statistics(props: any) {
 
 function createMapChartOptions(statisticData: any) {
     let mapChartData = {
-        keys: statisticData ? Array.from(statisticData.statistics.map.keys()) : [],
-        values: statisticData ? Array.from(statisticData.statistics.map.values()) : []
+        keys: statisticData ? (statisticData.statistics ? Array.from(statisticData.statistics.map.keys()) : []) : [],
+        values: statisticData ? (statisticData.statistics ? Array.from(statisticData.statistics.map.values()) : []) : []
     }
 
     let totalValues = []
@@ -43,7 +54,7 @@ function createMapChartOptions(statisticData: any) {
         labels: mapChartData.keys,
         datasets: [
             {
-                label: 'MapStatistics',
+                label: 'Maps played',
                 backgroundColor: chartColors('warm', mapChartData.keys.length, 'bar'),
                 data: mapChartData.values
             }
@@ -51,7 +62,7 @@ function createMapChartOptions(statisticData: any) {
     };
     const options = {
         legend: {
-            display: true
+            display: false
         },
         scales: {
             yAxes: [{
@@ -75,12 +86,13 @@ interface MapEntry {
 
 function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
     console.log(mapStatisticsList)
-    const chartArray: any[] = []
+    const mapChartArray: any[] = []
+    const raceMapChartArray: any[] = []
     mapStatisticsList.forEach((mapStatistic, mapName) => {
-        console.log("entered")
         const options = {
             legend: {
-                display: true
+                display: true,
+                reverse: true
             },
             scales: {
                 yAxes: [{
@@ -108,13 +120,98 @@ function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
         console.log("data")
         console.log(data)
 
-        chartArray.push(
+        mapChartArray.push(
             <Grid item sm={6}>
                 <Pie data={data} options={options}/>
+                <Typography
+                    variant={"h6"}>Winrate: {((mapStatistic.won / mapStatistic.total) * 100).toFixed(2)}%</Typography>
             </Grid>
         )
+
+        for (const raceStatistic of Object.entries(mapStatistic.raceStats)) {
+            const options = {
+                legend: {
+                    display: true,
+                    reverse: true
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: mapName + " vs " + raceStatistic[0]
+                }
+            }
+            const data = {
+                labels: ['won', 'lost'],
+                datasets: [
+                    {
+                        label: 'MapStatistics',
+                        backgroundColor: chartColors('warm', 2, 'pie'),
+                        data: [raceStatistic[1].won, raceStatistic[1].lost]
+                    }
+                ]
+            };
+
+            raceMapChartArray.push(
+                <Grid item sm={6}>
+                    <Pie data={data} options={options}/>
+                    <Typography
+                        variant={"h6"}>Winrate: {((raceStatistic[1].won / raceStatistic[1].total) * 100).toFixed(2)}%</Typography>
+                </Grid>
+            )
+        }
     });
-    return chartArray
+    return {mapChartArray: mapChartArray, raceMapChartArray: raceMapChartArray}
+}
+
+function createRaceWinrateCharts(raceStats: RaceStatisticList | null) {
+    if (!raceStats) {
+        return null
+    }
+    const raceChartArray = []
+    for (const raceStat of Object.entries(raceStats)) {
+        const options = {
+            legend: {
+                display: true,
+                reverse: true
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            title: {
+                display: true,
+                text: raceStat[0]
+            }
+        }
+        const data = {
+            labels: ['won', 'lost'],
+            datasets: [
+                {
+                    label: 'MapStatistics',
+                    backgroundColor: chartColors('warm', 2, 'pie'),
+                    data: [raceStat[1].won, raceStat[1].lost]
+                }
+            ]
+        };
+
+        raceChartArray.push(
+            <Grid item sm={6}>
+                <Pie data={data} options={options}/>
+                <Typography
+                    variant={"h6"}>Winrate: {((raceStat[1].won / raceStat[1].total) * 100).toFixed(2)}%</Typography>
+            </Grid>
+        )
+    }
+    return raceChartArray
 }
 
 export default Statistics;
