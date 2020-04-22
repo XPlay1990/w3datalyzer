@@ -31,6 +31,19 @@ function Statistics(props: any) {
 
     return (
         <div className="Statistic">
+            <Button
+                variant="contained"
+                color="default"
+                // className={classes.button}
+                startIcon={<ArrowBackIosIcon/>}
+                onClick={event => {
+                    ReactGA.event({
+                        category: "navigation",
+                        action: "toLandingPage",
+                    });
+                    history.push(`${APP_PATH_LandingPage}`)
+                }}
+            >Back</Button>
             <TabBar/>
             <Switch>
                 <Route
@@ -50,19 +63,6 @@ function Statistics(props: any) {
                     render={(props) => <MapRace statistic={statisticData}/>}
                 />
             </Switch>
-            <Button
-                variant="contained"
-                color="primary"
-                // className={classes.button}
-                startIcon={<ArrowBackIosIcon/>}
-                onClick={event => {
-                    ReactGA.event({
-                        category: "navigation",
-                        action: "toLandingPage",
-                    });
-                    history.push(`${APP_PATH_LandingPage}`)
-                }}
-            >Back</Button>
         </div>
     );
 }
