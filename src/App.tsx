@@ -10,11 +10,10 @@ import Statistics from "./statistic/Statistics";
 import LandingPage from "./LandingPage";
 import Header from "./ui/Header";
 import Footer from "./ui/Footer";
-import TabBar from "./ui/Tabs";
 import ReactGA from 'react-ga';
 
 function App() {
-    const googleTrackingId='UA-157113083-3'
+    const googleTrackingId = 'UA-157113083-3'
     ReactGA.initialize(googleTrackingId);
     ReactGA.set({
         // any data that is relevant to the user session
@@ -36,7 +35,6 @@ function App() {
             <Box display={"flex"} flexDirection={"column"} className={"AppBox"}>
                 <Header/>
                 <Box className="AppContent">
-                    <TabBar/>
                     <Switch>
                         <Route path={`${APP_PATH_STATISTICS}/:battleTag`} component={Statistics}/>
                         <Route path={FORBIDDEN_URL} component={Forbidden}/>

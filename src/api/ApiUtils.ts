@@ -42,7 +42,7 @@ interface Ranking {
     rp: number
 }
 
-export function useFetchBattleTagCandidates(partialBattleTag: string) {
+export function fetchBattleTagCandidates(partialBattleTag: string) {
     const limit = 5
     const headers = new Headers()
     headers.append("Content-Type", "application/json");
@@ -54,7 +54,7 @@ export function useFetchBattleTagCandidates(partialBattleTag: string) {
         headers: headers
     }
 
-    return useFetch(options)
+    return createRequest(options)
 }
 
 export function useFetchMatchData(battleTag: string) {
@@ -118,3 +118,15 @@ function useFetch(options: any) {
     // return [data, loading];
     return data;
 }
+
+const createRequest = (options:any) => {
+    return fetch(options.url, options)
+        .then(response =>
+            response.json().then(json => {
+                if (!response.ok) {
+                    return Promise.reject(json);
+                }
+                return json;
+            })
+        );
+};

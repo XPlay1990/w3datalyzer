@@ -14,8 +14,8 @@ function Race(statistic: any) {
 
     return (
         <Grid container spacing={3}>
-        {raceWinrateCharts}
-    </Grid>
+            {raceWinrateCharts}
+        </Grid>
     )
 }
 
@@ -39,7 +39,7 @@ function createRaceWinrateCharts(raceStats: RaceStatisticList | null) {
             },
             title: {
                 display: true,
-                text: raceStat[0]
+                text: "vs " + raceStat[0]
             }
         }
         const data = {
