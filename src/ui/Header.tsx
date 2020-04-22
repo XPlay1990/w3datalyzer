@@ -1,6 +1,6 @@
 import React from 'react';
-import {Box, Typography} from "@material-ui/core";
-import GpsFixedIcon from '@material-ui/icons/GpsFixed'
+import {Box, Link, Typography} from "@material-ui/core";
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 import './Header.css'
 
 function Header() {
@@ -9,9 +9,9 @@ function Header() {
         <div className={"HeaderContainer"}>
             <Box display={"flex"} flexDirection={"row"} className={"HeaderAppContainer"}>
                 <Box display={"flex"} flexDirection={"row"} className={"AppTitle"}>
-                    <GpsFixedIcon className={"HeaderIcon"} fontSize={"large"}/>
-                    <Typography variant={"h1"} style={{fontSize:'3rem'}}>
-                        W3Stats
+                    <EqualizerIcon className={"HeaderIcon"} fontSize={"large"}/>
+                    <Typography variant={"h1"} style={{fontSize: '3rem'}}>
+                        w3datalyzer
                     </Typography>
                 </Box>
                 <img src={""} alt={""} className={"Logo"}/>

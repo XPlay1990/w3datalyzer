@@ -1,5 +1,5 @@
 {
-  "name": "w3stats",
+  "name": "w3datalyzer",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
