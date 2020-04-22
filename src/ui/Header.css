@@ -1,0 +1,20 @@
+.HeaderAppContainer {
+    position: relative;
+}
+
+.HeaderIcon {
+    margin: auto 20px;
+}
+
+.HeaderLogo {
+    position: absolute;
+    right: 10px;
+    height: 50px;
+}
+
+.HeaderDivider {
+    color: #f44336;
+    background-color: #f44336;
+    height: 5px;
+    width: 95%;
+}
