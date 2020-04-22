@@ -105,6 +105,9 @@ export function CustomTable(customTableProps: CustomTableProps) {
 
     function createRows() {
         const rows: any[] = []
+        if (!customTableProps.data) {
+            return null
+        }
         customTableProps.data.forEach(function (value, key) {
                 rows.push(
                     <StyledTableRow>
@@ -114,6 +117,60 @@ export function CustomTable(customTableProps: CustomTableProps) {
                         <StyledTableCell>
                             {value}
                         </StyledTableCell>
+                    </StyledTableRow>
+                )
+            }
+        )
+        return rows
+    }
+
+
+    return (
+        <TableContainer component={Paper} style={{margin: "20px"}}>
+            <Table size="small" aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        {headerCells}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        createRows()
+                    }
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+}
+
+export function CustomVersusTable(customTableProps: CustomTableProps) {
+
+    const headerCells = []
+    for (const header of customTableProps.headers) {
+        headerCells.push(<StyledTableCell key={header}>{header}</StyledTableCell>)
+    }
+
+    function createRows() {
+        const rows: any[] = []
+        if (!customTableProps.data) {
+            return null
+        }
+        customTableProps.data.forEach(function (value, key) {
+                let valueCells: any[] = []
+                Object.entries(value).forEach(
+                    objectValue => {
+                        valueCells.push(
+                            <StyledTableCell>
+                                {objectValue[1] as Number}
+                            </StyledTableCell>)
+                    }
+                )
+                rows.push(
+                    <StyledTableRow>
+                        <StyledTableCell>
+                            {key}
+                        </StyledTableCell>
+                        {valueCells}
                     </StyledTableRow>
                 )
             }

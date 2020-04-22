@@ -31,7 +31,6 @@ function createMapWinrateOverviewChart(mapStatisticsList: Map<string, MapStatist
         dataMap.set(mapName, mapStatistic.winrate)
     });
 
-    console.log(dataMap)
     const data = {
         labels: Array.from(dataMap.keys()),
         datasets: [
@@ -72,7 +71,6 @@ function createMapWinrateOverviewChart(mapStatisticsList: Map<string, MapStatist
 }
 
 function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
-    console.log(mapStatisticsList)
     const mapChartArray: any[] = []
     mapStatisticsList.forEach((mapStatistic, mapName) => {
         if (mapStatistic.total === 0) {

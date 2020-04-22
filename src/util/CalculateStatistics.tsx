@@ -35,7 +35,15 @@ export interface Statistic {
     map: Map<string, MapStatistic>,
     race: RaceStatisticList,
     host: { hosted: number, notHosted: number, hostedPercentage: string },
-    avgGameTime: string
+    avgGameTime: string,
+    versus: Map<string, VersusObject>
+}
+
+interface VersusObject {
+    total: number,
+    win: number,
+    lose: number,
+    winrate: number
 }
 
 export interface Output {
@@ -72,6 +80,7 @@ export function useCalculateStatistics(playerBattleTag: string) {
             elf: {total: 0, won: 0, lost: 0, winrate: 0},
             human: {total: 0, won: 0, lost: 0, winrate: 0}
         }
+        let versusMap = new Map()
         for (let match of matchList) {
             if (match.state === 2) {
                 let gameTime = ((match.endTime - match.startTime) / 1000) / 60
@@ -103,6 +112,24 @@ export function useCalculateStatistics(playerBattleTag: string) {
                 for (const player of match.players) {
                     if (player.battleTag.toLowerCase() !== playerBattleTag.toLowerCase()) {
                         player.won ? mapStatistic.lost += 1 : mapStatistic.won += 1
+
+                        let versusObject: VersusObject = versusMap.get(player.battleTag)
+                        if (!versusObject) {
+                            versusObject = {
+                                total: 0,
+                                win: 0,
+                                lose: 0,
+                                winrate: 0
+                            }
+                        }
+                        versusObject.total += 1
+                        if (player.won) {
+                            versusObject.lose += 1
+                        } else {
+                            versusObject.win += 1
+                        }
+                        versusMap.set(player.battleTag, versusObject)
+
                         switch (player.race) {
                             case 0:
                                 //rdm
@@ -161,11 +188,16 @@ export function useCalculateStatistics(playerBattleTag: string) {
         for (const raceStatistic of Object.values(raceStatisticList)) {
             raceStatistic.winrate = Number(((raceStatistic.won / raceStatistic.total) * 100).toFixed(2))
         }
+        versusMap.forEach(versusObject => {
+            versusObject.winrate = Number(((versusObject.win / versusObject.total) * 100).toFixed(2))
+        })
+
         return {
             map: mapMap,
             race: raceStatisticList,
             host: host,
-            avgGameTime: ((gameTimes / matchList.length).toFixed(2) + " min")
+            avgGameTime: ((gameTimes / matchList.length).toFixed(2) + " min"),
+            versus: versusMap
         } as Statistic
     }
 

@@ -31,7 +31,6 @@ function raceWinrateChart(raceStats: RaceStatisticList | null) {
     }
     const raceWinrateChart: any[] = []
     const dataMap = new Map()
-    console.log(Object.entries(raceStats))
     for (const raceStatistic of Object.entries(raceStats)) {
         dataMap.set(raceStatistic[0], raceStatistic[1].winrate)
     }
