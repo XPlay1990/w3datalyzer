@@ -12,14 +12,14 @@ import Header from "./ui/Header";
 import Footer from "./ui/Footer";
 import ReactGA from 'react-ga';
 
-function App() {
-    const googleTrackingId = 'UA-157113083-3'
-    ReactGA.initialize(googleTrackingId);
-    ReactGA.set({
-        // any data that is relevant to the user session
-        // that you would like to track with google analytics
-    });
 
+const googleTrackingId = 'UA-157113083-3'
+ReactGA.initialize(googleTrackingId);
+ReactGA.set({
+    // any data that is relevant to the user session
+    // that you would like to track with google analytics
+});
+function App() {
     let theme = createMuiTheme({
         palette: {
             type: false ? 'dark' : 'light', // mediaquery on dark theme

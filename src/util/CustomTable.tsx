@@ -11,37 +11,36 @@ import {
     Link
 } from '@material-ui/core';
 
-interface CustomTableProps {
+interface CustomPairTableProps {
     headers: string[],
     data: any[],
     rowAccessors: string[],
     linkAccessor?: string
 }
 
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
+}))(TableCell);
 
-function CustomTable(customTableProps: CustomTableProps) {
-
-    const StyledTableCell = withStyles((theme) => ({
-        head: {
-            backgroundColor: theme.palette.common.black,
-            color: theme.palette.common.white,
+const StyledTableRow = withStyles((theme) => ({
+    root: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.background.default,
         },
-        body: {
-            fontSize: 14,
-        },
-    }))(TableCell);
+    },
+}))(TableRow);
 
-    const StyledTableRow = withStyles((theme) => ({
-        root: {
-            '&:nth-of-type(odd)': {
-                backgroundColor: theme.palette.background.default,
-            },
-        },
-    }))(TableRow);
 
+function CustomPairTable(customTableProps: CustomPairTableProps) {
 
     const headerCells = []
-    for (var header of customTableProps.headers) {
+    for (const header of customTableProps.headers) {
         headerCells.push(<StyledTableCell key={header}>{header}</StyledTableCell>)
     }
 
@@ -91,3 +90,52 @@ function CustomTable(customTableProps: CustomTableProps) {
 }
 
 export default CustomTable;
+
+interface CustomTableProps {
+    headers: string[],
+    data: Map<string, any>,
+}
+
+export function CustomTable(customTableProps: CustomTableProps) {
+
+    const headerCells = []
+    for (const header of customTableProps.headers) {
+        headerCells.push(<StyledTableCell key={header}>{header}</StyledTableCell>)
+    }
+
+    function createRows() {
+        const rows: any[] = []
+        customTableProps.data.forEach(function (value, key) {
+                rows.push(
+                    <StyledTableRow>
+                        <StyledTableCell>
+                            {key}
+                        </StyledTableCell>
+                        <StyledTableCell>
+                            {value}
+                        </StyledTableCell>
+                    </StyledTableRow>
+                )
+            }
+        )
+        return rows
+    }
+
+
+    return (
+        <TableContainer component={Paper} style={{margin: "20px"}}>
+            <Table size="small" aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        {headerCells}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        createRows()
+                    }
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+}

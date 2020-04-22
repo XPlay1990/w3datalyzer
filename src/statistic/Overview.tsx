@@ -7,8 +7,9 @@ import {Bar} from "react-chartjs-2";
 
 function Overview(statistic: any) {
     const headers = ['stat', 'value']
-    const data: any[] = []
-    const rowAccessors = ['test']
+    const dataMap = new Map()
+    dataMap.set("avg game time", statistic.statistic.statistics? statistic.statistic.statistics.avgGameTime : null)
+    dataMap.set("percentage of games hosted", statistic.statistic.statistics? (statistic.statistic.statistics.host.hostedPercentage + "%") : null)
 
     const mapOptions = createMapChartOptions(statistic.statistic)
 
@@ -18,7 +19,7 @@ function Overview(statistic: any) {
                 <Bar data={mapOptions.data} options={mapOptions.options}/>
             </Grid>
             <Grid item sm={6}>
-                <CustomTable headers={headers} data={data} rowAccessors={rowAccessors}/>
+                <CustomTable headers={headers} data={dataMap}/>
             </Grid>
         </Grid>
     )

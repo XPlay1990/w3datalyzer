@@ -7,6 +7,8 @@ import {fetchBattleTagCandidates} from "./api/ApiUtils";
 import './LandingPage.css'
 import {useHistory} from "react-router-dom";
 import {APP_PATH_STATISTICS} from "./resources/AppConstants";
+import ReactGA from 'react-ga';
+import {Simulate} from "react-dom/test-utils";
 
 interface Suggestion {
     mmr: { rating: number },
@@ -75,6 +77,11 @@ function LandingPage() {
                 endIcon={<SendIcon/>}
                 disabled={!playerTag}
                 onClick={event => {
+                    ReactGA.event({
+                        category: "LandingPage",
+                        action: "toStatistic",
+                        label: playerTag
+                    });
                     history.push(`${APP_PATH_STATISTICS}/${encodeURIComponent(playerTag)}`)
                 }}
             >Send</Button>

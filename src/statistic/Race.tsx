@@ -1,11 +1,16 @@
 import React from 'react';
-import {RaceStatisticList} from "../util/CalculateStatistics";
+import {MapStatistic, RaceStatisticList} from "../util/CalculateStatistics";
 import {chartColors} from "../util/ChartColors";
 import {Grid, Typography} from "@material-ui/core";
-import {Pie} from "react-chartjs-2";
+import {HorizontalBar, Pie} from "react-chartjs-2";
 
 function Race(statistic: any) {
 
+    const raceWinrateStatistic = raceWinrateChart(
+        statistic.statistic ?
+            (statistic.statistic.statistics ?
+                statistic.statistic.statistics.race : null) : null
+    )
     const raceWinrateCharts = createRaceWinrateCharts(
         statistic.statistic ?
             (statistic.statistic.statistics ?
@@ -14,9 +19,60 @@ function Race(statistic: any) {
 
     return (
         <Grid container spacing={3}>
+            {raceWinrateStatistic}
             {raceWinrateCharts}
         </Grid>
     )
+}
+
+function raceWinrateChart(raceStats: RaceStatisticList | null) {
+    if (!raceStats) {
+        return null
+    }
+    const raceWinrateChart: any[] = []
+    const dataMap = new Map()
+    console.log(Object.entries(raceStats))
+    for (const raceStatistic of Object.entries(raceStats)) {
+        dataMap.set(raceStatistic[0], raceStatistic[1].winrate)
+    }
+
+    const data = {
+        labels: Array.from(dataMap.keys()),
+        datasets: [
+            {
+                label: 'winpercentage',
+                backgroundColor: chartColors('warm', dataMap.size, 'bar'),
+                data: Array.from(dataMap.values())
+            }
+        ]
+    };
+    const options = {
+        legend: {
+            display: false
+        },
+        scales: {
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        title: {
+            display: true,
+            text: 'Race Winrate'
+        }
+    }
+
+    raceWinrateChart.push(
+        <Grid item sm={6}>
+            <HorizontalBar data={data} options={options}/>
+        </Grid>
+    )
+    raceWinrateChart.push(
+        <Grid item sm={6}>
+        </Grid>
+    )
+    return raceWinrateChart
 }
 
 function createRaceWinrateCharts(raceStats: RaceStatisticList | null) {
