@@ -21,6 +21,9 @@ function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
     const raceMapChartArray: any[] = []
     mapStatisticsList.forEach((mapStatistic, mapName) => {
         for (const raceStatistic of Object.entries(mapStatistic.raceStats)) {
+            if(raceStatistic[1].total === 0){
+                continue
+            }
             const options = {
                 legend: {
                     display: true,

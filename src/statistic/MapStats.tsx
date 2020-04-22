@@ -75,6 +75,10 @@ function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
     console.log(mapStatisticsList)
     const mapChartArray: any[] = []
     mapStatisticsList.forEach((mapStatistic, mapName) => {
+        if (mapStatistic.total === 0) {
+            return
+        }
+
         const options = {
             legend: {
                 display: true,

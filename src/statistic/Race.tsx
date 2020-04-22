@@ -81,6 +81,9 @@ function createRaceWinrateCharts(raceStats: RaceStatisticList | null) {
     }
     const raceChartArray = []
     for (const raceStat of Object.entries(raceStats)) {
+        if (raceStat[1].total === 0) {
+            continue
+        }
         const options = {
             legend: {
                 display: true,
