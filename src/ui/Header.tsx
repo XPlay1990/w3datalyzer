@@ -8,9 +8,9 @@ function Header() {
     return (
         <div className={"HeaderContainer"}>
             <Box display={"flex"} flexDirection={"row"} className={"HeaderAppContainer"}>
-                <Box display={"flex"} flexDirection={"row"} className={"AppTitle"}>
+                <Box display={"flex"} flexDirection={"row"} className="AppTitle">
                     <EqualizerIcon className={"HeaderIcon"} fontSize={"large"}/>
-                    <Typography variant={"h1"} style={{fontSize: '3rem'}}>
+                    <Typography variant={"h1"} style={{fontSize: '3rem', }}>
                         w3datalyzer
                     </Typography>
                 </Box>

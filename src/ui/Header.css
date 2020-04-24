@@ -12,6 +12,12 @@
     height: 50px;
 }
 
+.AppTitle{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .HeaderDivider {
     color: #f44336;
     background-color: #f44336;

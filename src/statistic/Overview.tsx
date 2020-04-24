@@ -4,6 +4,7 @@ import {MapStatistic} from "../util/CalculateStatistics";
 import {chartColors} from "../util/ChartColors";
 import {Grid} from "@material-ui/core";
 import {Bar, Line} from "react-chartjs-2";
+import moment from "moment";
 
 function Overview(statistic: any) {
     const headers = ['stat', 'value']
@@ -14,7 +15,7 @@ function Overview(statistic: any) {
 
     const mapOptions = createMapChartOptions(statistic.statistic)
 
-    const mmrChart = createMMrChart(statistic.statistic.statistics ? statistic.statistic.statistics.mmrArray : [])
+    const mmrChart = createMMrChart(statistic.statistic.statistics ? statistic.statistic.statistics.mmrMap : new Map())
 
     return (
         <Grid container spacing={3}>
@@ -33,15 +34,19 @@ function Overview(statistic: any) {
     )
 }
 
-function createMMrChart(mmrArray: Number[]) {
+function createMMrChart(mmrMap: Map<any, number>) {
+    const dateArray = []
+    for (const dateEntry of Array.from(mmrMap.keys()).reverse()) {
+        dateArray.push(moment(dateEntry).format('DD.MM.YYYY : H:mm'))
+    }
     const data = {
-        labels: mmrArray,
+        labels: dateArray,
         datasets: [
             {
                 fill: false,
                 label: 'mmr over time',
-                backgroundColor: chartColors('warm', mmrArray.length, 'line'),
-                data: mmrArray
+                backgroundColor: chartColors('warm', mmrMap.size, 'line'),
+                data: Array.from(mmrMap.values()).reverse()
             }
         ]
     };
@@ -56,9 +61,24 @@ function createMMrChart(mmrArray: Number[]) {
             //     }
             // }],
             xAxes: [{
+                // type:'time',
                 ticks: {
-                    display: false //this will remove only the label
+                    display: true, //this will remove only the label
+                    autoSkip: true,
+                    maxTicksLimit: 20
+                },
+                // time:       {
+                //     unit: 'day',
+                //     format: 'YYYY-MM-DD',
+                //     tooltipFormat: 'll'
+                // },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Date'
                 }
+                // format: "DD/MM/YYYY",
+                // format: "YYYY-MM-DD",
+                // tooltipFormat: 'll'
             }]
         },
         title: {
