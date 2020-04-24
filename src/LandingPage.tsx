@@ -38,14 +38,13 @@ function LandingPage() {
         <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
             <Autocomplete
                 id="playerTag"
-                style={{width: 300, marginRight: "50px", marginBottom:"20px"}}
+                style={{width: 300, marginRight: "50px", marginBottom: "20px"}}
                 options={suggestions}
                 debug
                 autoHighlight
                 filterOptions={(options, state) => {
                     return suggestions
-                }
-                }
+                }}
 
                 getOptionLabel={(option) => decodeURIComponent(option.battleTag)}
                 renderOption={(option) => (
@@ -73,6 +72,7 @@ function LandingPage() {
                 variant="contained"
                 color="primary"
                 // className={classes.button}
+                style={{marginBottom: "auto", marginTop: "auto"}}
                 endIcon={<SendIcon/>}
                 disabled={!playerTag}
                 onClick={event => {

@@ -12,15 +12,22 @@
     height: 50px;
 }
 
-.AppTitle{
+.AppTitle {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    flex: 1
+}
+
+.DarkmodeToggle {
+    /*margin-right: 10px;*/
+    margin: auto;
 }
 
 .HeaderDivider {
     color: #f44336;
-    background-color: #f44336;
+    background: #f44336;
+    border-color: #f44336;
     height: 5px;
     width: 95%;
 }

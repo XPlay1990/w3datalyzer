@@ -8,3 +8,5 @@ export const APP_PATH_STATISTICS_RACE = (battleTag: string) => `${APP_PATH_STATI
 export const APP_PATH_STATISTICS_MAPRACE = (battleTag: string) => `${APP_PATH_STATISTICS}/${battleTag}/maprace`
 
 export const STORAGE_BATTLETAG='battleTag'
+
+export const IS_DARK_MODE = 'darkMode';

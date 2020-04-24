@@ -2,8 +2,8 @@ import React from 'react';
 import {Route, Switch, withRouter} from 'react-router-dom';
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from "@material-ui/core/styles";
 import './App.css';
-import {Box, CssBaseline} from "@material-ui/core";
-import {APP_PATH_LandingPage, APP_PATH_STATISTICS, FORBIDDEN_URL} from "./resources/AppConstants";
+import {Box, CssBaseline, Paper, useMediaQuery} from "@material-ui/core";
+import {APP_PATH_LandingPage, APP_PATH_STATISTICS, FORBIDDEN_URL, IS_DARK_MODE} from "./resources/AppConstants";
 import Forbidden from "./error/Forbidden";
 import NotFound from "./error/NotFound";
 import Statistics from "./statistic/Statistics";
@@ -19,10 +19,13 @@ ReactGA.set({
     // any data that is relevant to the user session
     // that you would like to track with google analytics
 });
+
 function App() {
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    localStorage.setItem(IS_DARK_MODE, (localStorage.getItem(IS_DARK_MODE) || prefersDarkMode.toString()));
     let theme = createMuiTheme({
         palette: {
-            type: false ? 'dark' : 'light', // mediaquery on dark theme
+            type: (localStorage.getItem(IS_DARK_MODE) === 'true') ? 'dark' : 'light', // mediaquery on dark theme
             // primary: {main: blue[500]},
             // secondary: red,
         },
@@ -32,7 +35,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
-            <Box display={"flex"} flexDirection={"column"} className={"AppBox"}>
+            <Paper className="AppBox" color={"primary"}>
                 <Header/>
                 <Box className="AppContent">
                     <Switch>
@@ -43,7 +46,7 @@ function App() {
                     </Switch>
                 </Box>
                 <Footer/>
-            </Box>
+            </Paper>
         </ThemeProvider>
     );
 }
