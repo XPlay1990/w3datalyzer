@@ -37,7 +37,7 @@ function Overview(statistic: any) {
 function createMMrChart(mmrMap: Map<any, number>) {
     const dateArray = []
     for (const dateEntry of Array.from(mmrMap.keys()).reverse()) {
-        dateArray.push(moment(dateEntry).format('DD.MM.YYYY : H:mm'))
+        dateArray.push(moment(dateEntry).format('DD.MM.YYYY H:mm'))
     }
     const data = {
         labels: dateArray,

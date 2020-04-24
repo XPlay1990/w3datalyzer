@@ -172,7 +172,7 @@ export function useCalculateStatistics(playerBattleTag: string) {
                         // player.won
                     } else {
                         // searched player
-                        mmrMap.set(new Date(match.startTime) ,player.mmr.rating)
+                        mmrMap.set(new Date(match.endTime), Math.round(player.updatedMmr.rating))
                     }
                 }
 
