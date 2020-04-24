@@ -35,10 +35,10 @@ function LandingPage() {
     }, [playerTag]);
 
     return (
-        <Box display={"flex"} flexDirection={"row"}>
+        <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
             <Autocomplete
                 id="playerTag"
-                style={{width: 300, marginRight: "50px"}}
+                style={{width: 300, marginRight: "50px", marginBottom:"20px"}}
                 options={suggestions}
                 debug
                 autoHighlight
