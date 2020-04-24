@@ -173,6 +173,8 @@ export function useCalculateStatistics(playerBattleTag: string) {
                     } else {
                         // searched player
                         mmrArray.push(player.mmr.rating)
+                        console.log(match.createdAt)
+                        console.log(player.mmr.rating)
                     }
                 }
 

@@ -59,12 +59,12 @@ function createMapWinrateOverviewChart(mapStatisticsList: Map<string, MapStatist
     }
 
     mapChartArray.push(
-        <Grid item sm={6}>
+        <Grid item sm={6} xs={12}>
             <HorizontalBar data={data} options={options}/>
         </Grid>
     )
     mapChartArray.push(
-        <Grid item sm={6}>
+        <Grid item sm={6} xs={12}>
         </Grid>
     )
     return mapChartArray
@@ -106,7 +106,7 @@ function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
         };
 
         mapChartArray.push(
-            <Grid item sm={6}>
+            <Grid item sm={6} xs={12}>
                 <Pie data={data} options={options}/>
                 <Typography
                     variant={"h6"}>Winrate: {((mapStatistic.won / mapStatistic.total) * 100).toFixed(2)}%</Typography>

@@ -53,7 +53,7 @@ function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
             };
 
             raceMapChartArray.push(
-                <Grid item sm={6}>
+                <Grid item sm={6} xs={12}>
                     <Pie data={data} options={options}/>
                     <Typography
                         variant={"h6"}>Winrate: {((raceStatistic[1].won / raceStatistic[1].total) * 100).toFixed(2)}%</Typography>

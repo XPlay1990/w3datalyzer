@@ -63,12 +63,12 @@ function raceWinrateChart(raceStats: RaceStatisticList | null) {
     }
 
     raceWinrateChart.push(
-        <Grid item sm={6}>
+        <Grid item sm={6} xs={12}>
             <HorizontalBar data={data} options={options}/>
         </Grid>
     )
     raceWinrateChart.push(
-        <Grid item sm={6}>
+        <Grid item sm={6} xs={12}>
         </Grid>
     )
     return raceWinrateChart
@@ -112,7 +112,7 @@ function createRaceWinrateCharts(raceStats: RaceStatisticList | null) {
         };
 
         raceChartArray.push(
-            <Grid item sm={6}>
+            <Grid item sm={6} xs={12}>
                 <Pie data={data} options={options}/>
                 <Typography
                     variant={"h6"}>Winrate: {((raceStat[1].won / raceStat[1].total) * 100).toFixed(2)}%</Typography>
