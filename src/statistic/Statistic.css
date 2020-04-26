@@ -1,3 +1,20 @@
-.Statistic{
+.Statistic {
     min-height: 100%;
+}
+
+.BackButton {
+    align-self: flex-start;
+}
+
+.StatisticTitleBox {
+    align-items: center;
+}
+
+.StatisticTitle {
+}
+
+.raceImage {
+    /*margin-top: auto;*/
+    /*margin-bottom: auto;*/
+    height: 3rem;
 }

@@ -37,7 +37,8 @@ export interface Statistic {
     host: { hosted: number, notHosted: number, hostedPercentage: string },
     avgGameTime: string,
     versus: Map<string, VersusObject>,
-    mmrMap: Map<any, number>
+    mmrMap: Map<any, number>,
+    mostPlayedRace: number
 }
 
 interface VersusObject {
@@ -48,25 +49,30 @@ interface VersusObject {
 }
 
 export interface Output {
+    isLoading: boolean,
     total: number,
     statistics: Statistic | undefined
 }
 
 export function useCalculateStatistics(playerBattleTag: string) {
     const playerMatchDataResponseList = useFetchMatchData(playerBattleTag)
-    const [statisticValues, setStatisticValues] = useState<Output>({total: 0, statistics: undefined})
+    const [statisticValues, setStatisticValues] = useState<Output>({total: 0, isLoading: true, statistics: undefined})
 
     function calculateStatisticValues() {
-        if (playerMatchDataResponseList.length > 0) {
+        if (!(playerMatchDataResponseList.isLoading) && playerMatchDataResponseList.data.length > 0) {
             let playerMatchList: Match[] = []
-            const totalGames = playerMatchDataResponseList[0].total as number
-            for (let response of playerMatchDataResponseList) {
+            const totalGames = playerMatchDataResponseList.data[0].total as number
+            for (let response of playerMatchDataResponseList.data) {
                 playerMatchList = playerMatchList.concat(response.items)
             }
 
             let statistics = calculateMatchStatistics(playerMatchList)
 
-            setStatisticValues({total: totalGames, statistics: statistics})
+            setStatisticValues({
+                total: totalGames,
+                statistics: statistics,
+                isLoading: playerMatchDataResponseList.isLoading
+            })
         }
     }
 
@@ -83,6 +89,7 @@ export function useCalculateStatistics(playerBattleTag: string) {
         }
         let versusMap = new Map()
         let mmrMap = new Map()
+        let playedRaceMap = new Map()
         for (let match of matchList) {
             if (match.state === 2) {
                 let gameTime = ((match.endTime - match.startTime) / 1000) / 60
@@ -173,6 +180,8 @@ export function useCalculateStatistics(playerBattleTag: string) {
                     } else {
                         // searched player
                         mmrMap.set(new Date(match.endTime), Math.round(player.updatedMmr.rating))
+                        let oldValue = playedRaceMap.get(player.race)
+                        playedRaceMap.set(player.race, (oldValue ? (oldValue + 1) : 1))
                     }
                 }
 
@@ -197,18 +206,25 @@ export function useCalculateStatistics(playerBattleTag: string) {
             versusObject.winrate = Number(((versusObject.win / versusObject.total) * 100).toFixed(2))
         })
 
+        const playedRaceCount: any[] = []
+        playedRaceMap.forEach((value, key) => {
+            playedRaceCount.push({race: key, count: value})
+        })
+        const mostPlayedRaceNumber = playedRaceCount.reduce((a, b) => a.count > b.count ? a : b).race;
+
         return {
             map: mapMap,
             race: raceStatisticList,
             host: host,
             avgGameTime: ((gameTimes / matchList.length).toFixed(2) + " min"),
             versus: versusMap,
-            mmrMap: mmrMap
+            mmrMap: mmrMap,
+            mostPlayedRace: mostPlayedRaceNumber
         } as Statistic
     }
 
     useEffect(() => {
         calculateStatisticValues();
-    }, [playerMatchDataResponseList]);
+    }, [playerMatchDataResponseList.isLoading]);
     return statisticValues
 }

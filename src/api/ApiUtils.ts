@@ -57,6 +57,11 @@ export function fetchBattleTagCandidates(partialBattleTag: string) {
     return createRequest(options)
 }
 
+export interface FetchData {
+    isLoading: boolean,
+    data: any
+}
+
 export function useFetchMatchData(battleTag: string) {
     const limit = 100
     const offset = 0
@@ -76,7 +81,8 @@ export function useFetchMatchData(battleTag: string) {
 function useFetchMatchApi(options: any, limit: number, offset: number, baseUrl: string) {
     const [data, setData] = useState<any[]>([]);
 
-    // const [loading, setLoading] = useState(true);
+    const [isLoading, setLoading] = useState(true);
+
     async function fetchUrl() {
         options.url = `${baseUrl}?limit=${limit}&offset=${offset}`
 
@@ -93,33 +99,16 @@ function useFetchMatchApi(options: any, limit: number, offset: number, baseUrl: 
             matchCount = json.total
         }
         setData(matchData)
+        setLoading(false);
     }
 
     useEffect(() => {
         fetchUrl();
     }, []);
-    // return [data, loading];
-    return data;
+    return {data: data, isLoading: isLoading};
 }
 
-function useFetch(options: any) {
-    const [data, setData] = useState<any[]>([]);
-
-    // const [loading, setLoading] = useState(true);
-    async function fetchUrl() {
-        const response = await fetch(options.url, options);
-        const json = await response.json();
-        setData(json)
-    }
-
-    useEffect(() => {
-        fetchUrl();
-    }, []);
-    // return [data, loading];
-    return data;
-}
-
-const createRequest = (options:any) => {
+const createRequest = (options: any) => {
     return fetch(options.url, options)
         .then(response =>
             response.json().then(json => {

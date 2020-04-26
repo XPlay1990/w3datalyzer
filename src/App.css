@@ -1,6 +1,6 @@
 .AppBox {
-    /*display: flex;*/
-    /*flex-direction: column;*/
+    display: flex;
+    flex-direction: column;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -13,6 +13,11 @@
     margin-right: auto;
     padding: 30px;
     min-height: 100%;
-    width:100%;
+    width: 100%;
     flex: 1;
+}
+
+/* visited link */
+a:visited {
+    color: blue;
 }

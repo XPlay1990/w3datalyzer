@@ -1,15 +1,16 @@
 import React from 'react';
 import {
+    Link,
     Paper,
-    TableRow,
-    TableCell,
-    TableBody,
-    withStyles,
-    TableContainer,
     Table,
+    TableBody,
+    TableCell,
+    TableContainer,
     TableHead,
-    Link
+    TableRow,
+    withStyles
 } from '@material-ui/core';
+import {APP_PATH_STATISTICS_OVERVIEW} from "../resources/AppConstants";
 
 interface CustomPairTableProps {
     headers: string[],
@@ -168,7 +169,9 @@ export function CustomVersusTable(customTableProps: CustomTableProps) {
                 rows.push(
                     <StyledTableRow>
                         <StyledTableCell>
-                            {key}
+                            <Link href={`${APP_PATH_STATISTICS_OVERVIEW(encodeURIComponent(key))}`}>
+                                {key}
+                            </Link>
                         </StyledTableCell>
                         {valueCells}
                     </StyledTableRow>
