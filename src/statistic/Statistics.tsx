@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 import {useCalculateStatistics} from "../util/CalculateStatistics";
 import './Statistic.css'
@@ -6,10 +6,16 @@ import TabBar from "../ui/Tabs";
 import {Box, CircularProgress} from "@material-ui/core";
 import StatisticsHeader from "./StatisticsHeader";
 import StatisticsSwitch from "./StatisticsSwitch";
+import {STORAGE_BATTLETAG} from "../resources/AppConstants";
 
 function Statistics(props: any) {
     const battleTag = decodeURIComponent(props.match.params.battleTag)
     const statisticData = useCalculateStatistics(battleTag)
+
+    useEffect(() => {
+        localStorage.setItem(STORAGE_BATTLETAG, battleTag)
+    }, [statisticData])
+
 
     return (
         (statisticData.isLoading) ? (
