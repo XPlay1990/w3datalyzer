@@ -6,7 +6,7 @@ import SendIcon from '@material-ui/icons/Send';
 import {fetchBattleTagCandidates} from "./api/ApiUtils";
 import './LandingPage.css'
 import {useHistory} from "react-router-dom";
-import {APP_PATH_STATISTICS} from "./resources/AppConstants";
+import {APP_PATH_STATISTICS, STORAGE_BATTLETAG} from "./resources/AppConstants";
 import ReactGA from 'react-ga';
 
 interface Suggestion {
@@ -82,6 +82,7 @@ function LandingPage() {
                         label: playerTag
                     });
                     history.push(`${APP_PATH_STATISTICS}/${encodeURIComponent(playerTag)}`)
+                    localStorage.setItem(STORAGE_BATTLETAG, playerTag)
                 }}
             >Send</Button>
         </Box>

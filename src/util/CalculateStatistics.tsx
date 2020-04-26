@@ -48,7 +48,7 @@ interface VersusObject {
     winrate: number
 }
 
-export interface Output {
+export interface StatisticDataOutput {
     isLoading: boolean,
     total: number,
     statistics: Statistic | undefined
@@ -56,7 +56,7 @@ export interface Output {
 
 export function useCalculateStatistics(playerBattleTag: string) {
     const playerMatchDataResponseList = useFetchMatchData(playerBattleTag)
-    const [statisticValues, setStatisticValues] = useState<Output>({total: 0, isLoading: true, statistics: undefined})
+    const [statisticValues, setStatisticValues] = useState<StatisticDataOutput>({total: 0, isLoading: true, statistics: undefined})
 
     function calculateStatisticValues() {
         if (!(playerMatchDataResponseList.isLoading) && playerMatchDataResponseList.data.length > 0) {

@@ -111,7 +111,7 @@ export function CustomTable(customTableProps: CustomTableProps) {
         }
         customTableProps.data.forEach(function (value, key) {
                 rows.push(
-                    <StyledTableRow>
+                    <StyledTableRow key={rows.length}>
                         <StyledTableCell>
                             {key}
                         </StyledTableCell>
@@ -161,13 +161,13 @@ export function CustomVersusTable(customTableProps: CustomTableProps) {
                 Object.entries(value).forEach(
                     objectValue => {
                         valueCells.push(
-                            <StyledTableCell>
+                            <StyledTableCell key={valueCells.length}>
                                 {objectValue[1] as Number}
                             </StyledTableCell>)
                     }
                 )
                 rows.push(
-                    <StyledTableRow>
+                    <StyledTableRow key={rows.length}>
                         <StyledTableCell>
                             <Link href={`${APP_PATH_STATISTICS_OVERVIEW(encodeURIComponent(key))}`}>
                                 {key}

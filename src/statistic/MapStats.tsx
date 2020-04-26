@@ -60,7 +60,7 @@ function MapStats(statistic: any) {
         }
 
         mapChartArray.push(
-            <Grid item sm={6} xs={12}>
+            <Grid item sm={6} xs={12} key={mapChartArray.length}>
                 <HorizontalBar data={data} options={options}/>
             </Grid>
         )
