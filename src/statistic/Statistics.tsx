@@ -1,6 +1,5 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import '../App.css';
 import {useCalculateStatistics} from "../util/CalculateStatistics";
 import './Statistic.css'
 import TabBar from "../ui/Tabs";
