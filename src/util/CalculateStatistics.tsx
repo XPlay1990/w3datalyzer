@@ -56,7 +56,11 @@ export interface StatisticDataOutput {
 
 export function useCalculateStatistics(playerBattleTag: string) {
     const playerMatchDataResponseList = useFetchMatchData(playerBattleTag)
-    const [statisticValues, setStatisticValues] = useState<StatisticDataOutput>({total: 0, isLoading: true, statistics: undefined})
+    const [statisticValues, setStatisticValues] = useState<StatisticDataOutput>({
+        total: 0,
+        isLoading: true,
+        statistics: undefined
+    })
 
     function calculateStatisticValues() {
         if (!(playerMatchDataResponseList.isLoading) && playerMatchDataResponseList.data.length > 0) {
@@ -91,103 +95,106 @@ export function useCalculateStatistics(playerBattleTag: string) {
         let mmrMap = new Map()
         let playedRaceMap = new Map()
         for (let match of matchList) {
+            console.log(match)
             if (match.state === 2) {
-                let gameTime = ((match.endTime - match.startTime) / 1000) / 60
-                gameTimes += gameTime
-                //MapStats
-                const slashIndex = match.map.lastIndexOf('/');
-                const mapName = match.map.substring(slashIndex + 1).replace('.w3x', '');
-                // mapMap.set(mapName, mapMap.get(mapName) ? mapMap.get(mapName) + 1 : 1)
-                let mapStatistic = mapMap.get(mapName)
-                if (!mapStatistic) {
-                    mapStatistic = {
-                        total: 0,
-                        won: 0,
-                        lost: 0,
-                        winrate: 0,
-                        raceStats: {
-                            elf: {total: 0, won: 0, lost: 0, winrate: 0},
-                            rdm: {total: 0, won: 0, lost: 0, winrate: 0},
-                            undead: {total: 0, won: 0, lost: 0, winrate: 0},
-                            orc: {total: 0, won: 0, lost: 0, winrate: 0},
-                            human: {total: 0, won: 0, lost: 0, winrate: 0}
-                        }
-                    }
-                }
-
-                mapStatistic.total += 1
-
-                //RaceStats
-                for (const player of match.players) {
-                    if (player.battleTag.toLowerCase() !== playerBattleTag.toLowerCase()) {
-                        player.won ? mapStatistic.lost += 1 : mapStatistic.won += 1
-
-                        let versusObject: VersusObject = versusMap.get(player.battleTag)
-                        if (!versusObject) {
-                            versusObject = {
-                                total: 0,
-                                win: 0,
-                                lose: 0,
-                                winrate: 0
+                if (match.gameMode === 1 && match.gateway === 20) {
+                    let gameTime = ((match.endTime - match.startTime) / 1000) / 60
+                    gameTimes += gameTime
+                    //MapStats
+                    const slashIndex = match.map.lastIndexOf('/');
+                    const mapName = match.map.substring(slashIndex + 1).replace('.w3x', '');
+                    // mapMap.set(mapName, mapMap.get(mapName) ? mapMap.get(mapName) + 1 : 1)
+                    let mapStatistic = mapMap.get(mapName)
+                    if (!mapStatistic) {
+                        mapStatistic = {
+                            total: 0,
+                            won: 0,
+                            lost: 0,
+                            winrate: 0,
+                            raceStats: {
+                                elf: {total: 0, won: 0, lost: 0, winrate: 0},
+                                rdm: {total: 0, won: 0, lost: 0, winrate: 0},
+                                undead: {total: 0, won: 0, lost: 0, winrate: 0},
+                                orc: {total: 0, won: 0, lost: 0, winrate: 0},
+                                human: {total: 0, won: 0, lost: 0, winrate: 0}
                             }
                         }
-                        versusObject.total += 1
-                        if (player.won) {
-                            versusObject.lose += 1
-                        } else {
-                            versusObject.win += 1
-                        }
-                        versusMap.set(player.battleTag, versusObject)
-
-                        switch (player.race) {
-                            case 0:
-                                //rdm
-                                raceStatisticList.rdm.total += 1
-                                player.won ? raceStatisticList.rdm.lost += 1 : raceStatisticList.rdm.won += 1
-                                mapStatistic.raceStats.rdm.total += 1
-                                player.won ? mapStatistic.raceStats.rdm.lost += 1 : mapStatistic.raceStats.rdm.won += 1
-                                break;
-                            case 1:
-                                //human
-                                raceStatisticList.human.total += 1
-                                player.won ? raceStatisticList.human.lost += 1 : raceStatisticList.human.won += 1
-                                mapStatistic.raceStats.human.total += 1
-                                player.won ? mapStatistic.raceStats.human.lost += 1 : mapStatistic.raceStats.human.won += 1
-                                break;
-                            case 2:
-                                //orc
-                                raceStatisticList.orc.total += 1
-                                player.won ? raceStatisticList.orc.lost += 1 : raceStatisticList.orc.won += 1
-                                mapStatistic.raceStats.orc.total += 1
-                                player.won ? mapStatistic.raceStats.orc.lost += 1 : mapStatistic.raceStats.orc.won += 1
-                                break;
-                            case 4:
-                                //elf
-                                raceStatisticList.elf.total += 1
-                                player.won ? raceStatisticList.elf.lost += 1 : raceStatisticList.elf.won += 1
-                                mapStatistic.raceStats.elf.total += 1
-                                player.won ? mapStatistic.raceStats.elf.lost += 1 : mapStatistic.raceStats.elf.won += 1
-                                break;
-                            case 8: //wtf pad
-                                //undead
-                                raceStatisticList.undead.total += 1
-                                player.won ? raceStatisticList.undead.lost += 1 : raceStatisticList.undead.won += 1
-                                mapStatistic.raceStats.undead.total += 1
-                                player.won ? mapStatistic.raceStats.undead.lost += 1 : mapStatistic.raceStats.undead.won += 1
-                                break
-                        }
-                        // player.won
-                    } else {
-                        // searched player
-                        mmrMap.set(new Date(match.endTime), Math.round(player.updatedMmr.rating))
-                        let oldValue = playedRaceMap.get(player.race)
-                        playedRaceMap.set(player.race, (oldValue ? (oldValue + 1) : 1))
                     }
-                }
 
-                //Hosted Stats
-                (match.host === playerBattleTag) ? host.hosted = host.hosted + 1 : host.notHosted = host.notHosted + 1
-                mapMap.set(mapName, mapStatistic)
+                    mapStatistic.total += 1
+
+                    //RaceStats
+                    for (const player of match.players) {
+                        if (player.battleTag.toLowerCase() !== playerBattleTag.toLowerCase()) {
+                            player.won ? mapStatistic.lost += 1 : mapStatistic.won += 1
+
+                            let versusObject: VersusObject = versusMap.get(player.battleTag)
+                            if (!versusObject) {
+                                versusObject = {
+                                    total: 0,
+                                    win: 0,
+                                    lose: 0,
+                                    winrate: 0
+                                }
+                            }
+                            versusObject.total += 1
+                            if (player.won) {
+                                versusObject.lose += 1
+                            } else {
+                                versusObject.win += 1
+                            }
+                            versusMap.set(player.battleTag, versusObject)
+
+                            switch (player.race) {
+                                case 0:
+                                    //rdm
+                                    raceStatisticList.rdm.total += 1
+                                    player.won ? raceStatisticList.rdm.lost += 1 : raceStatisticList.rdm.won += 1
+                                    mapStatistic.raceStats.rdm.total += 1
+                                    player.won ? mapStatistic.raceStats.rdm.lost += 1 : mapStatistic.raceStats.rdm.won += 1
+                                    break;
+                                case 1:
+                                    //human
+                                    raceStatisticList.human.total += 1
+                                    player.won ? raceStatisticList.human.lost += 1 : raceStatisticList.human.won += 1
+                                    mapStatistic.raceStats.human.total += 1
+                                    player.won ? mapStatistic.raceStats.human.lost += 1 : mapStatistic.raceStats.human.won += 1
+                                    break;
+                                case 2:
+                                    //orc
+                                    raceStatisticList.orc.total += 1
+                                    player.won ? raceStatisticList.orc.lost += 1 : raceStatisticList.orc.won += 1
+                                    mapStatistic.raceStats.orc.total += 1
+                                    player.won ? mapStatistic.raceStats.orc.lost += 1 : mapStatistic.raceStats.orc.won += 1
+                                    break;
+                                case 4:
+                                    //elf
+                                    raceStatisticList.elf.total += 1
+                                    player.won ? raceStatisticList.elf.lost += 1 : raceStatisticList.elf.won += 1
+                                    mapStatistic.raceStats.elf.total += 1
+                                    player.won ? mapStatistic.raceStats.elf.lost += 1 : mapStatistic.raceStats.elf.won += 1
+                                    break;
+                                case 8: //wtf pad
+                                    //undead
+                                    raceStatisticList.undead.total += 1
+                                    player.won ? raceStatisticList.undead.lost += 1 : raceStatisticList.undead.won += 1
+                                    mapStatistic.raceStats.undead.total += 1
+                                    player.won ? mapStatistic.raceStats.undead.lost += 1 : mapStatistic.raceStats.undead.won += 1
+                                    break
+                            }
+                            // player.won
+                        } else {
+                            // searched player
+                            mmrMap.set(new Date(match.endTime), Math.round(player.updatedMmr.rating))
+                            let oldValue = playedRaceMap.get(player.race)
+                            playedRaceMap.set(player.race, (oldValue ? (oldValue + 1) : 1))
+                        }
+                    }
+
+                    //Hosted Stats
+                    (match.host === playerBattleTag) ? host.hosted = host.hosted + 1 : host.notHosted = host.notHosted + 1
+                    mapMap.set(mapName, mapStatistic)
+                }
             }
         }
         host.hostedPercentage = ((host.hosted / (host.hosted + host.notHosted)) * 100).toFixed(2)

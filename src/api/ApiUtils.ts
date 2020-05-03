@@ -48,7 +48,7 @@ export function fetchBattleTagCandidates(partialBattleTag: string) {
     headers.append("Content-Type", "application/json");
 
     const options = {
-        url: `https://api.w3champions.com/leagues/20/find-player/${partialBattleTag}/?limit=${limit}`,
+        url: `https://api.w3champions.com/leagues/20/1/find-player/${partialBattleTag}/?limit=${limit}`,
         method: 'GET',
         mode: 'cors' as RequestMode,
         headers: headers
