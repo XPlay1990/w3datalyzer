@@ -8,9 +8,12 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Tooltip,
     withStyles
 } from '@material-ui/core';
-import {APP_PATH_STATISTICS_OVERVIEW} from "../resources/AppConstants";
+import {APP_PATH_STATISTICS_OVERVIEW, DEFAULT_GATEWAY, STORAGE_GATEWAY} from "../resources/AppConstants";
+import {Team2v2Statistics} from "./CalculateStatistics";
+import {getLeagueName} from "../api/ApiUtils";
 
 interface CustomPairTableProps {
     headers: string[],
@@ -145,7 +148,6 @@ export function CustomTable(customTableProps: CustomTableProps) {
 }
 
 export function CustomVersusTable(customTableProps: CustomTableProps) {
-
     const headerCells = []
     for (const header of customTableProps.headers) {
         headerCells.push(<StyledTableCell key={header}>{header}</StyledTableCell>)
@@ -169,7 +171,8 @@ export function CustomVersusTable(customTableProps: CustomTableProps) {
                 rows.push(
                     <StyledTableRow key={rows.length}>
                         <StyledTableCell>
-                            <Link href={`${APP_PATH_STATISTICS_OVERVIEW(encodeURIComponent(key))}`}>
+                            <Link href={`${APP_PATH_STATISTICS_OVERVIEW(encodeURIComponent(key),
+                                localStorage.getItem(STORAGE_GATEWAY) || DEFAULT_GATEWAY)}`}>
                                 {key}
                             </Link>
                         </StyledTableCell>
@@ -188,6 +191,101 @@ export function CustomVersusTable(customTableProps: CustomTableProps) {
                 <TableHead>
                     <TableRow>
                         {headerCells}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        createRows()
+                    }
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+}
+
+export function Custom2v2Table(customTableProps: CustomTableProps) {
+
+    function createRows() {
+        const rows: any[] = []
+        if (!customTableProps.data) {
+            return null
+        }
+        customTableProps.data.forEach((teamStatistic: Team2v2Statistics) => {
+
+            const playerNameCells = []
+            for (const playerName of teamStatistic.playerNames) {
+                playerNameCells.push(
+                    <StyledTableCell>
+                        <Link
+                            href={`${APP_PATH_STATISTICS_OVERVIEW(encodeURIComponent(playerName),
+                                localStorage.getItem(STORAGE_GATEWAY) || DEFAULT_GATEWAY)}`}>
+                            {playerName}
+                        </Link>
+                    </StyledTableCell>
+                )
+            }
+            const statsCells: any[] = []
+            statsCells.push(
+                <StyledTableCell>{teamStatistic.stats.total}</StyledTableCell>
+            )
+            statsCells.push(
+                <StyledTableCell>{teamStatistic.stats.win}</StyledTableCell>
+            )
+            statsCells.push(
+                <StyledTableCell>{teamStatistic.stats.lose}</StyledTableCell>
+            )
+            statsCells.push(
+                <StyledTableCell>{teamStatistic.stats.winRate}%</StyledTableCell>
+            )
+            if (teamStatistic.rank === -1) {
+                statsCells.push(
+                    <StyledTableCell>unranked</StyledTableCell>
+                )
+            } else {
+                const leagueIcon =
+                    <Tooltip
+                        title={`${getLeagueName(teamStatistic.league.leagueId)} ${teamStatistic.league.leagueOrder}`}>
+                        <img src={`https://w3champions.com/leagues/${teamStatistic.league.leagueId}.png`} alt={"League"}
+                             className="LeagueIcon"
+                        />
+                    </Tooltip>
+                statsCells.push(
+                    <StyledTableCell>{teamStatistic.rank}{leagueIcon}</StyledTableCell>
+                )
+            }
+            rows.push(
+                <StyledTableRow>
+                    {playerNameCells}
+                    {statsCells}
+                </StyledTableRow>
+            )
+        })
+        return rows
+    }
+
+    return (
+        <TableContainer component={Paper} style={{margin: "20px"}}>
+            <Table size="small" aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <StyledTableCell align="center" colSpan={2}>
+                            Team
+                        </StyledTableCell>
+                        <StyledTableCell>
+                            total
+                        </StyledTableCell>
+                        <StyledTableCell>
+                            won
+                        </StyledTableCell>
+                        <StyledTableCell>
+                            lost
+                        </StyledTableCell>
+                        <StyledTableCell>
+                            winrate
+                        </StyledTableCell>
+                        <StyledTableCell>
+                            rank
+                        </StyledTableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

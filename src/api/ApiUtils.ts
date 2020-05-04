@@ -1,5 +1,26 @@
 import {useEffect, useState} from 'react';
 
+export function getLeagueName(league: number) {
+    switch (league) {
+        case 0:
+            return "Grand Master"
+        case 1:
+            return "Master"
+        case 2:
+            return "Diamond"
+        case 3:
+            return "Platinum"
+        case 4:
+            return "Gold"
+        case 5:
+            return "Silver"
+        case 6:
+            return "Bronze"
+        default:
+            return ""
+    }
+}
+
 export interface Match {
     createdAt: Date,
     endTime: number,
@@ -19,7 +40,8 @@ export interface Match {
         ranking: Ranking,
         updatedMmr: Mmr,
         updatedRanking: Ranking,
-        won: boolean
+        won: boolean,
+        team: number
     }],
     publicGame: boolean,
     startTime: number,

@@ -1,29 +1,39 @@
 import React from 'react';
 import CustomTable, {CustomVersusTable} from "../util/CustomTable";
-import {MapStatistic} from "../util/CalculateStatistics";
+import {MapStatistic, Statistic} from "../util/CalculateStatistics";
 import {chartColors} from "../util/ChartColors";
 import {Grid, useTheme} from "@material-ui/core";
 import {Bar, Line} from "react-chartjs-2";
-import { DateTime } from "luxon";
+import {DateTime} from "luxon";
 import './Overview.css'
 
-function Overview(statistic: any) {
+export interface StatisticInput {
+    statistics: Statistic | undefined
+}
+
+function Overview(statistic: StatisticInput) {
     const theme = useTheme();
 
     const headers = ['stat', 'value']
     const versusHeaders = ['vs Player', 'total', 'win', 'lose', 'winrate']
     const dataMap = new Map()
-    dataMap.set("avg game time", statistic.statistic.statistics ? statistic.statistic.statistics.avgGameTime : null)
-    dataMap.set("percentage of games played as host", statistic.statistic.statistics ? (statistic.statistic.statistics.host.hostedPercentage + "%") : null)
+    dataMap.set("avg game time", statistic.statistics ? statistic.statistics.avgGameTime : null)
+    dataMap.set("percentage of games played as host", statistic.statistics ? (statistic.statistics.host.hostedPercentage + "%") : null)
 
-    const mapOptions = createMapChartOptions(statistic.statistic)
+    const mapOptions = createMapChartOptions(statistic)
 
-    const mmrChart = createMMrChart(statistic.statistic.statistics ? statistic.statistic.statistics.mmrMap : new Map())
+    const mmrChart = createMMrChart(statistic.statistics ? statistic.statistics.mmrMap : new Map())
 
     function createMMrChart(mmrMap: Map<any, number>) {
         const dateArray = []
         for (const dateEntry of Array.from(mmrMap.keys()).reverse()) {
-            dateArray.push(DateTime.fromJSDate(dateEntry).toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }))
+            dateArray.push(DateTime.fromJSDate(dateEntry).toLocaleString({
+                weekday: 'short',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            }))
         }
         const data = {
             labels: dateArray,
@@ -67,7 +77,7 @@ function Overview(statistic: any) {
                     // format: "YYYY-MM-DD",
                     // tooltipFormat: 'll'
                 }],
-                yAxes:[{
+                yAxes: [{
                     ticks: {
                         fontColor: theme.palette.text.primary
                     },
@@ -113,7 +123,7 @@ function Overview(statistic: any) {
                 display: false,
             },
             scales: {
-                xAxes:[{
+                xAxes: [{
                     ticks: {
                         fontColor: theme.palette.text.primary
                     },
@@ -144,7 +154,7 @@ function Overview(statistic: any) {
             </Grid>
             <Grid item sm={6} xs={12}>
                 <CustomVersusTable headers={versusHeaders}
-                                   data={statistic.statistic.statistics ? statistic.statistic.statistics.versus : null}/>
+                                   data={statistic.statistics ? statistic.statistics.versus : new Map()}/>
             </Grid>
             {mmrChart}
         </Grid>

@@ -39,7 +39,7 @@ function App() {
                 <Header/>
                 <Box className="AppContent">
                     <Switch>
-                        <Route path={`${APP_PATH_STATISTICS}/:battleTag`} component={Statistics}/>
+                        <Route path={`${APP_PATH_STATISTICS}/:battleTag/:gateway`} component={Statistics}/>
                         <Route path={FORBIDDEN_URL} component={Forbidden}/>
                         <Route path={APP_PATH_LandingPage} render={() => <LandingPage/>}/>
                         <Route component={NotFound}/>

@@ -1,6 +1,6 @@
 import {Match, useFetchMatchData} from "../api/ApiUtils";
 import {useEffect, useState} from "react";
-import {GAMEMODE_1v1, GAMEMODE_2v2_AT, GATEWAY_EU} from "../resources/AppConstants";
+import {GAMEMODE_1v1, GAMEMODE_2v2_AT} from "../resources/AppConstants";
 
 interface TimesAgainstRace {
     elf: number
@@ -39,7 +39,8 @@ export interface Statistic {
     avgGameTime: string,
     versus: Map<string, VersusObject>,
     mmrMap: Map<any, number>,
-    mostPlayedRace: number
+    mostPlayedRace: number,
+    team2v2: Map<string, Team2v2Statistics>
 }
 
 interface VersusObject {
@@ -49,15 +50,23 @@ interface VersusObject {
     winRate: number
 }
 
-export interface StatisticDataOutput {
+export interface StatisticDataFetch {
     isLoading: boolean,
     total: number,
     statistics: Statistic | undefined
 }
 
-export function useCalculateStatistics(playerBattleTag: string) {
+export interface Team2v2Statistics {
+    stats: VersusObject,
+    playerNames: string[],
+    rank: number,
+    league: { leagueId: number, leagueOrder: number }
+}
+
+export function useCalculateStatistics(playerBattleTag: string, gateway: number) {
+    console.log(gateway)
     const playerMatchDataResponseList = useFetchMatchData(playerBattleTag)
-    const [statisticValues, setStatisticValues] = useState<StatisticDataOutput>({
+    const [statisticValues, setStatisticValues] = useState<StatisticDataFetch>({
         total: 0,
         isLoading: true,
         statistics: undefined
@@ -95,9 +104,11 @@ export function useCalculateStatistics(playerBattleTag: string) {
         let versusMap = new Map()
         let mmrMap = new Map()
         let playedRaceMap = new Map()
+
+        const team2v2Map = new Map<string, Team2v2Statistics>()
         for (let match of matchList) {
             if (match.state === 2) {
-                if (match.gateway === GATEWAY_EU) {
+                if (match.gateway === gateway) {
                     if (match.gameMode === GAMEMODE_1v1) {
                         let gameTime = ((match.endTime - match.startTime) / 1000) / 60
                         gameTimes += gameTime
@@ -195,8 +206,57 @@ export function useCalculateStatistics(playerBattleTag: string) {
                         //Hosted Stats
                         (match.host === playerBattleTag) ? host.hosted = host.hosted + 1 : host.notHosted = host.notHosted + 1
                         mapMap.set(mapName, mapStatistic)
-                    } else if (match.gameMode === GAMEMODE_2v2_AT){
+                    } else if (match.gameMode === GAMEMODE_2v2_AT) {
+                        const teamMap =
+                            new Map<number, {
+                                playerNames: string[], won: boolean,
+                                league: { leagueId: number, leagueOrder: number }, rank: number
+                            }>()
+                        for (const player of match.players) {
+                            let actualTeam = teamMap.get(player.team);
+                            if (actualTeam) {
+                                actualTeam.playerNames.push(player.battleTag)
+                                actualTeam.playerNames = actualTeam.playerNames.sort()
+                            } else {
+                                actualTeam = {
+                                    won: player.won,
+                                    rank: player.ranking.rank,
+                                    league: {
+                                        leagueId: player.ranking.leagueId,
+                                        leagueOrder: player.ranking.leagueOrder
+                                    },
+                                    playerNames: [player.battleTag]
+                                }
+                                console.log(player.ranking)
+                            }
+                            teamMap.set(player.team, actualTeam)
+                        }
 
+                        teamMap.forEach(team => {
+                            if (team.playerNames.includes(playerBattleTag)) {
+                                const teamName = team.playerNames.join(' & ')
+                                let savedTeam = team2v2Map.get(teamName);
+                                if (savedTeam) {
+                                    team.won ? savedTeam.stats.win += 1 : savedTeam.stats.lose += 1
+                                    savedTeam.stats.total += 1
+                                    savedTeam.stats.winRate =
+                                        Number(((savedTeam.stats.win / savedTeam.stats.total) * 100).toFixed(2))
+                                } else {
+                                    savedTeam = {
+                                        stats: {
+                                            win: team.won ? 1 : 0,
+                                            lose: team.won ? 0 : 1,
+                                            total: 1,
+                                            winRate: team.won ? 100 : 0,
+                                        },
+                                        playerNames: team.playerNames,
+                                        rank: team.rank,
+                                        league: team.league
+                                    }
+                                }
+                                team2v2Map.set(teamName, savedTeam)
+                            }
+                        })
                     }
                 }
             }
@@ -214,7 +274,7 @@ export function useCalculateStatistics(playerBattleTag: string) {
             raceStatistic.winRate = Number(((raceStatistic.won / raceStatistic.total) * 100).toFixed(2))
         }
         versusMap.forEach(versusObject => {
-            versusObject.winrate = Number(((versusObject.win / versusObject.total) * 100).toFixed(2))
+            versusObject.winRate = Number(((versusObject.win / versusObject.total) * 100).toFixed(2))
         })
 
         const playedRaceCount: any[] = []
@@ -230,7 +290,8 @@ export function useCalculateStatistics(playerBattleTag: string) {
             avgGameTime: ((gameTimes / matchList.length).toFixed(2) + " min"),
             versus: versusMap,
             mmrMap: mmrMap,
-            mostPlayedRace: mostPlayedRaceNumber
+            mostPlayedRace: mostPlayedRaceNumber,
+            team2v2: team2v2Map
         } as Statistic
     }
 

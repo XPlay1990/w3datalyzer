@@ -10,7 +10,8 @@ import {STORAGE_BATTLETAG} from "../resources/AppConstants";
 
 function Statistics(props: any) {
     const battleTag = decodeURIComponent(props.match.params.battleTag)
-    const statisticData = useCalculateStatistics(battleTag)
+    const gateway = Number(decodeURIComponent(props.match.params.gateway))
+    const statisticData = useCalculateStatistics(battleTag,gateway)
 
     useEffect(() => {
         localStorage.setItem(STORAGE_BATTLETAG, battleTag)

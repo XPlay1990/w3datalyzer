@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Tab, Tabs} from "@material-ui/core";
 import {useHistory} from 'react-router-dom'
 import {
+    APP_PATH_STATISTICS_2v2,
     APP_PATH_STATISTICS_MAP, APP_PATH_STATISTICS_MAPRACE,
     APP_PATH_STATISTICS_OVERVIEW,
     APP_PATH_STATISTICS_RACE, STORAGE_BATTLETAG
@@ -17,6 +18,7 @@ function TabBar(props: any) {
     moduleMap.set('map', APP_PATH_STATISTICS_MAP)
     moduleMap.set('race', APP_PATH_STATISTICS_RACE)
     moduleMap.set('maprace', APP_PATH_STATISTICS_MAPRACE)
+    moduleMap.set('2v2', APP_PATH_STATISTICS_2v2)
 
     const tabs = []
     for (let key of Array.from(moduleMap.keys())) {
