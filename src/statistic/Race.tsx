@@ -1,8 +1,8 @@
 import React from 'react';
 import {RaceStatisticList} from "../util/CalculateStatistics";
 import {chartColors} from "../util/ChartColors";
-import {Grid, Typography, useTheme} from "@material-ui/core";
-import {HorizontalBar, Pie} from "react-chartjs-2";
+import {Grid, useTheme} from "@material-ui/core";
+import {HorizontalBar} from "react-chartjs-2";
 import {CustomRaceTable} from "../util/CustomTable";
 import {StatisticInput} from "./Overview";
 

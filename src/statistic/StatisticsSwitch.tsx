@@ -29,7 +29,7 @@ function StatisticsSwitch(input: StatisticDataFetch) {
             />
             <Route
                 path={`${APP_PATH_STATISTICS}/:battleTag/:gateway/maprace`}
-                render={(props) => <MapRace statistic={input}/>}
+                render={(props) => <MapRace statistics={input.statistics!}/>}
             />
             <Route
                 path={`${APP_PATH_STATISTICS}/:battleTag/:gateway/2v2`}

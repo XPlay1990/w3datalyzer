@@ -11,7 +11,7 @@ function Team2v2(statistic: StatisticInput) {
             <Grid item sm={12} xs={12}>
                 <Custom2v2Table
                     headers={[]}
-                    data={statistic.statistics ? statistic.statistics.team2v2 : new Map()}
+                    data={statistic.statistics.team2v2}
                 />
             </Grid>
         </Grid>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    Box,
     Link,
     Paper,
     Table,
@@ -215,7 +216,7 @@ export function Custom2v2Table(customTableProps: CustomTableProps) {
             const playerNameCells = []
             for (const playerName of teamStatistic.playerNames) {
                 playerNameCells.push(
-                    <StyledTableCell>
+                    <StyledTableCell key={playerNameCells.length}>
                         <Link
                             href={`${APP_PATH_STATISTICS_OVERVIEW(encodeURIComponent(playerName),
                                 localStorage.getItem(STORAGE_GATEWAY) || DEFAULT_GATEWAY)}`}>
@@ -244,13 +245,21 @@ export function Custom2v2Table(customTableProps: CustomTableProps) {
             } else {
                 const leagueIcon =
                     <Tooltip
-                        title={`${getLeagueName(teamStatistic.league.leagueId)} ${teamStatistic.league.leagueOrder}`}>
+                        title={`${getLeagueName(teamStatistic.league.leagueId)} ${teamStatistic.league.leagueOrder}`}
+                    >
                         <img src={`https://w3champions.com/leagues/${teamStatistic.league.leagueId}.png`} alt={"League"}
                              className="LeagueIcon"
                         />
                     </Tooltip>
                 statsCells.push(
-                    <StyledTableCell>{teamStatistic.rank}{leagueIcon}</StyledTableCell>
+                    <StyledTableCell>
+                        <Box display={"flex"} flexDirection={"row"} style={{
+                            justifyContent: "flex-start", alignContent: "center",
+                            alignItems: "center", textAlign: "center", marginTop:"auto", marginBottom:"auto"
+                        }}>
+                            {teamStatistic.rank}.{leagueIcon}
+                        </Box>
+                    </StyledTableCell>
                 )
             }
             rows.push(
@@ -319,19 +328,19 @@ export function CustomRaceTable(customTableProps: CustomRaceTableProps) {
         Object.entries(customTableProps.data).forEach(raceStatistic => {
             const cells: any[] = []
             cells.push(
-                <StyledTableCell>
+                <StyledTableCell key={cells.length}>
                     {raceStatistic[0]}
                 </StyledTableCell>
             )
             Object.entries(raceStatistic[1]).forEach(raceStat => {
                 cells.push(
-                    <StyledTableCell>
+                    <StyledTableCell key={cells.length}>
                         {(raceStat[1] as string)}
                     </StyledTableCell>
                 )
             })
             rows.push(
-                <StyledTableRow>
+                <StyledTableRow key={rows.length}>
                     {cells}
                 </StyledTableRow>
             )
@@ -376,27 +385,25 @@ export function CustomMapTable(customTableProps: CustomMapTableProps) {
         if (!customTableProps.data) {
             return null
         }
-        console.log(customTableProps.data)
 
         customTableProps.data.forEach((mapStatistic, map) => {
             const cells: any[] = []
             cells.push(
-                <StyledTableCell>
+                <StyledTableCell key={cells.length}>
                     {map}
                 </StyledTableCell>
             )
             Object.entries(mapStatistic).forEach(mapStat => {
-                console.log(mapStat)
                 if (mapStat[0] !== "raceStats") {
                     cells.push(
-                        <StyledTableCell>
+                        <StyledTableCell key={cells.length}>
                             {(mapStat[1] as string)}
                         </StyledTableCell>
                     )
                 }
             })
             rows.push(
-                <StyledTableRow>
+                <StyledTableRow key={rows.length}>
                     {cells}
                 </StyledTableRow>
             )

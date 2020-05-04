@@ -3,14 +3,13 @@ import {MapStatistic} from "../util/CalculateStatistics";
 import {chartColors} from "../util/ChartColors";
 import {Grid, Typography, useTheme} from "@material-ui/core";
 import {Pie} from "react-chartjs-2";
+import {StatisticInput} from "./Overview";
 
-function MapRace(statistic: any) {
+function MapRace(input: StatisticInput) {
     const theme = useTheme();
 
     const mapRaceWinrateCharts = createMapWinrateCharts(
-        statistic.statistic ?
-            (statistic.statistic.statistics ?
-                statistic.statistic.statistics.map : new Map<string, MapStatistic>()) : new Map<string, MapStatistic>()
+        input.statistics.map
     )
 
     function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
