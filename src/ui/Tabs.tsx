@@ -11,6 +11,7 @@ import {
     STORAGE_BATTLETAG,
     STORAGE_GATEWAY
 } from "../resources/AppConstants";
+import ReactGA from "react-ga";
 
 function TabBar(props: any) {
     const [selectedTab, setSelectedTab] = useState('overview')
@@ -32,6 +33,11 @@ function TabBar(props: any) {
     return (
         <Tabs value={selectedTab}
               onChange={(event, newValue) => {
+                  ReactGA.event({
+                      category: "navigation",
+                      action: "changeTab",
+                      label: newValue
+                  });
                   setSelectedTab(newValue);
                   history.push(
                       moduleMap.get(newValue)(
