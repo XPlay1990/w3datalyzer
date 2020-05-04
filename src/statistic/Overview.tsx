@@ -17,7 +17,7 @@ function Overview(statistic: StatisticInput) {
     const headers = ['stat', 'value']
     const versusHeaders = ['vs Player', 'total', 'win', 'lose', 'winrate']
     const dataMap = new Map()
-    dataMap.set("avg game time", statistic.statistics ? statistic.statistics.avgGameTime : null)
+    dataMap.set("avg game time (1v1)", statistic.statistics ? statistic.statistics.avgGameTime : null)
     dataMap.set("percentage of games played as host", statistic.statistics ? (statistic.statistics.host.hostedPercentage + "%") : null)
 
     const mapOptions = createMapChartOptions(statistic)

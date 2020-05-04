@@ -64,7 +64,6 @@ export interface Team2v2Statistics {
 }
 
 export function useCalculateStatistics(playerBattleTag: string, gateway: number) {
-    console.log(gateway)
     const playerMatchDataResponseList = useFetchMatchData(playerBattleTag)
     const [statisticValues, setStatisticValues] = useState<StatisticDataFetch>({
         total: 0,
@@ -94,6 +93,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
         let host = {hosted: 0, notHosted: 0, hostedPercentage: ""}
         let mapMap = new Map<string, MapStatistic>()
         let gameTimes = 0
+        let gameCount = 0
         let raceStatisticList: RaceStatisticList = {
             rdm: {total: 0, won: 0, lost: 0, winRate: 0},
             orc: {total: 0, won: 0, lost: 0, winRate: 0},
@@ -112,6 +112,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                     if (match.gameMode === GAMEMODE_1v1) {
                         let gameTime = ((match.endTime - match.startTime) / 1000) / 60
                         gameTimes += gameTime
+                        gameCount += 1
                         //MapStats
                         const slashIndex = match.map.lastIndexOf('/');
                         const mapName = match.map.substring(slashIndex + 1).replace('.w3x', '');
@@ -227,7 +228,6 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                                     },
                                     playerNames: [player.battleTag]
                                 }
-                                console.log(player.ranking)
                             }
                             teamMap.set(player.team, actualTeam)
                         }
@@ -261,7 +261,8 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                 }
             }
         }
-        host.hostedPercentage = ((host.hosted / (host.hosted + host.notHosted)) * 100).toFixed(2)
+        host.hostedPercentage = (host.hosted + host.notHosted > 0) ?
+            ((host.hosted / (host.hosted + host.notHosted)) * 100).toFixed(2) : "0"
         mapMap.forEach(mapStatistic => {
                 mapStatistic.winRate = Number(((mapStatistic.won / mapStatistic.total) * 100).toFixed(2))
                 //ToDo: fill racestats inside map
@@ -281,13 +282,13 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
         playedRaceMap.forEach((value, key) => {
             playedRaceCount.push({race: key, count: value})
         })
-        const mostPlayedRaceNumber = playedRaceCount.reduce((a, b) => a.count > b.count ? a : b).race;
+        const mostPlayedRaceNumber = playedRaceCount.reduce((a, b) => a.count > b.count ? a : b, 0).race;
 
         return {
             map: mapMap,
             race: raceStatisticList,
             host: host,
-            avgGameTime: ((gameTimes / matchList.length).toFixed(2) + " min"),
+            avgGameTime: ((gameTimes / gameCount).toFixed(2) + " min"),
             versus: versusMap,
             mmrMap: mmrMap,
             mostPlayedRace: mostPlayedRaceNumber,
