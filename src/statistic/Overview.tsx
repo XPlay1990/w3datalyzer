@@ -8,7 +8,7 @@ import {DateTime} from "luxon";
 import './Overview.css'
 
 export interface StatisticInput {
-    statistics: Statistic | undefined
+    statistics: Statistic
 }
 
 function Overview(statistic: StatisticInput) {

@@ -17,15 +17,15 @@ function StatisticsSwitch(input: StatisticDataFetch) {
         <Switch>
             <Route
                 path={`${APP_PATH_STATISTICS}/:battleTag/:gateway/overview`}
-                render={(props) => <Overview statistics={input.statistics}/>}
+                render={(props) => <Overview statistics={input.statistics!}/>}
             />
             <Route
                 path={`${APP_PATH_STATISTICS}/:battleTag/:gateway/map`}
-                render={(props) => <MapStats statistic={input}/>}
+                render={(props) => <MapStats statistics={input.statistics!}/>}
             />
             <Route
                 path={`${APP_PATH_STATISTICS}/:battleTag/:gateway/race`}
-                render={(props) => <Race statistic={input}/>}
+                render={(props) => <Race statistics={input.statistics!}/>}
             />
             <Route
                 path={`${APP_PATH_STATISTICS}/:battleTag/:gateway/maprace`}
@@ -33,11 +33,11 @@ function StatisticsSwitch(input: StatisticDataFetch) {
             />
             <Route
                 path={`${APP_PATH_STATISTICS}/:battleTag/:gateway/2v2`}
-                render={(props) => <Team2v2 statistics={input.statistics}/>}
+                render={(props) => <Team2v2 statistics={input.statistics!}/>}
             />
             <Route
                 path={`${APP_PATH_STATISTICS}/:battleTag/:gateway`}
-                render={(props) => <Overview statistics={input.statistics}/>}
+                render={(props) => <Overview statistics={input.statistics!}/>}
             />
         </Switch>
     )

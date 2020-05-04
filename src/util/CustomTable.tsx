@@ -12,7 +12,7 @@ import {
     withStyles
 } from '@material-ui/core';
 import {APP_PATH_STATISTICS_OVERVIEW, DEFAULT_GATEWAY, STORAGE_GATEWAY} from "../resources/AppConstants";
-import {Team2v2Statistics} from "./CalculateStatistics";
+import {MapStatistic, RaceStatisticList, Team2v2Statistics} from "./CalculateStatistics";
 import {getLeagueName} from "../api/ApiUtils";
 
 interface CustomPairTableProps {
@@ -286,6 +286,131 @@ export function Custom2v2Table(customTableProps: CustomTableProps) {
                         <StyledTableCell>
                             rank
                         </StyledTableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        createRows()
+                    }
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+}
+
+interface CustomRaceTableProps {
+    headers: string[],
+    data: RaceStatisticList
+}
+
+export function CustomRaceTable(customTableProps: CustomRaceTableProps) {
+
+    const headerCells = []
+    for (const header of customTableProps.headers) {
+        headerCells.push(<StyledTableCell key={header}>{header}</StyledTableCell>)
+    }
+
+    function createRows() {
+        const rows: any[] = []
+        if (!customTableProps.data) {
+            return null
+        }
+
+        Object.entries(customTableProps.data).forEach(raceStatistic => {
+            const cells: any[] = []
+            cells.push(
+                <StyledTableCell>
+                    {raceStatistic[0]}
+                </StyledTableCell>
+            )
+            Object.entries(raceStatistic[1]).forEach(raceStat => {
+                cells.push(
+                    <StyledTableCell>
+                        {(raceStat[1] as string)}
+                    </StyledTableCell>
+                )
+            })
+            rows.push(
+                <StyledTableRow>
+                    {cells}
+                </StyledTableRow>
+            )
+        })
+        return rows
+    }
+
+
+    return (
+        <TableContainer component={Paper} style={{margin: "20px"}}>
+            <Table size="small" aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        {headerCells}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        createRows()
+                    }
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+}
+
+
+interface CustomMapTableProps {
+    headers: string[],
+    data: Map<string, MapStatistic>
+}
+
+export function CustomMapTable(customTableProps: CustomMapTableProps) {
+
+    const headerCells = []
+    for (const header of customTableProps.headers) {
+        headerCells.push(<StyledTableCell key={header}>{header}</StyledTableCell>)
+    }
+
+    function createRows() {
+        const rows: any[] = []
+        if (!customTableProps.data) {
+            return null
+        }
+        console.log(customTableProps.data)
+
+        customTableProps.data.forEach((mapStatistic, map) => {
+            const cells: any[] = []
+            cells.push(
+                <StyledTableCell>
+                    {map}
+                </StyledTableCell>
+            )
+            Object.entries(mapStatistic).forEach(mapStat => {
+                console.log(mapStat)
+                if (mapStat[0] !== "raceStats") {
+                    cells.push(
+                        <StyledTableCell>
+                            {(mapStat[1] as string)}
+                        </StyledTableCell>
+                    )
+                }
+            })
+            rows.push(
+                <StyledTableRow>
+                    {cells}
+                </StyledTableRow>
+            )
+        })
+        return rows
+    }
+
+
+    return (
+        <TableContainer component={Paper} style={{margin: "20px"}}>
+            <Table size="small" aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        {headerCells}
                     </TableRow>
                 </TableHead>
                 <TableBody>

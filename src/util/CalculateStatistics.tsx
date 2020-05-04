@@ -1,6 +1,6 @@
 import {Match, useFetchMatchData} from "../api/ApiUtils";
 import {useEffect, useState} from "react";
-import {GAMEMODE_1v1, GAMEMODE_2v2_AT} from "../resources/AppConstants";
+import {GAMEMODE_1v1, GAMEMODE_2v2_AT, NO_GAMES_TEXT} from "../resources/AppConstants";
 
 interface TimesAgainstRace {
     elf: number
@@ -13,7 +13,7 @@ export interface MapStatistic {
     total: number,
     won: number,
     lost: number,
-    winRate: number,
+    winRate: string,
     raceStats: RaceStatisticList
 }
 
@@ -29,7 +29,7 @@ interface RaceStatistic {
     won: number,
     lost: number,
     total: number,
-    winRate: number
+    winRate: string
 }
 
 export interface Statistic {
@@ -95,11 +95,11 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
         let gameTimes = 0
         let gameCount = 0
         let raceStatisticList: RaceStatisticList = {
-            rdm: {total: 0, won: 0, lost: 0, winRate: 0},
-            orc: {total: 0, won: 0, lost: 0, winRate: 0},
-            undead: {total: 0, won: 0, lost: 0, winRate: 0},
-            elf: {total: 0, won: 0, lost: 0, winRate: 0},
-            human: {total: 0, won: 0, lost: 0, winRate: 0}
+            rdm: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT},
+            orc: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT},
+            undead: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT},
+            elf: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT},
+            human: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT}
         }
         let versusMap = new Map()
         let mmrMap = new Map()
@@ -123,13 +123,13 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                                 total: 0,
                                 won: 0,
                                 lost: 0,
-                                winRate: 0,
+                                winRate: NO_GAMES_TEXT,
                                 raceStats: {
-                                    elf: {total: 0, won: 0, lost: 0, winRate: 0},
-                                    rdm: {total: 0, won: 0, lost: 0, winRate: 0},
-                                    undead: {total: 0, won: 0, lost: 0, winRate: 0},
-                                    orc: {total: 0, won: 0, lost: 0, winRate: 0},
-                                    human: {total: 0, won: 0, lost: 0, winRate: 0}
+                                    elf: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT},
+                                    rdm: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT},
+                                    undead: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT},
+                                    orc: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT},
+                                    human: {total: 0, won: 0, lost: 0, winRate: NO_GAMES_TEXT}
                                 }
                             }
                         }
@@ -262,17 +262,21 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
             }
         }
         host.hostedPercentage = (host.hosted + host.notHosted > 0) ?
-            ((host.hosted / (host.hosted + host.notHosted)) * 100).toFixed(2) + "%": "Never"
+            ((host.hosted / (host.hosted + host.notHosted)) * 100).toFixed(2) + "%" : "Never"
         mapMap.forEach(mapStatistic => {
-                mapStatistic.winRate = Number(((mapStatistic.won / mapStatistic.total) * 100).toFixed(2))
-                //ToDo: fill racestats inside map
+                mapStatistic.winRate =
+                    mapStatistic.total > 0 ?
+                        ((mapStatistic.won / mapStatistic.total) * 100).toFixed(2) + "%" : NO_GAMES_TEXT
                 for (const raceStatistic of Object.values(mapStatistic.raceStats)) {
-                    raceStatistic.winRate = Number(((raceStatistic.won / raceStatistic.total) * 100).toFixed(2))
+                    raceStatistic.winRate =
+                        raceStatistic.total > 0 ?
+                            ((raceStatistic.won / raceStatistic.total) * 100).toFixed(2) + "%" : NO_GAMES_TEXT
                 }
             }
         )
         for (const raceStatistic of Object.values(raceStatisticList)) {
-            raceStatistic.winRate = Number(((raceStatistic.won / raceStatistic.total) * 100).toFixed(2))
+            raceStatistic.winRate = raceStatistic.total > 0 ?
+                ((raceStatistic.won / raceStatistic.total) * 100).toFixed(2) + "%" : NO_GAMES_TEXT
         }
         versusMap.forEach(versusObject => {
             versusObject.winRate = Number(((versusObject.win / versusObject.total) * 100).toFixed(2))
@@ -288,7 +292,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
             map: mapMap,
             race: raceStatisticList,
             host: host,
-            avgGameTime: (gameCount > 0) ?((gameTimes / gameCount).toFixed(2) + " min") : 0,
+            avgGameTime: (gameCount > 0) ? ((gameTimes / gameCount).toFixed(2) + " min") : 0,
             versus: versusMap,
             mmrMap: mmrMap,
             mostPlayedRace: mostPlayedRaceNumber,

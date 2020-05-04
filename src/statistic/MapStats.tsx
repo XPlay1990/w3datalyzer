@@ -1,28 +1,23 @@
 import React from 'react';
 import {MapStatistic} from "../util/CalculateStatistics";
 import {chartColors} from "../util/ChartColors";
-import {Grid, Typography, useTheme} from "@material-ui/core";
-import {HorizontalBar, Pie} from "react-chartjs-2";
+import {Grid, useTheme} from "@material-ui/core";
+import {HorizontalBar} from "react-chartjs-2";
+import {StatisticInput} from "./Overview";
+import {CustomMapTable} from "../util/CustomTable";
 
-function MapStats(statistic: any) {
+function MapStats(input: StatisticInput) {
     const theme = useTheme();
 
     const mapWinRateOverviewChart = createMapWinrateOverviewChart(
-        statistic.statistic ?
-            (statistic.statistic.statistics ?
-                statistic.statistic.statistics.map : new Map<string, MapStatistic>()) : new Map<string, MapStatistic>()
-    )
-    const mapWinrateCharts = createMapWinrateCharts(
-        statistic.statistic ?
-            (statistic.statistic.statistics ?
-                statistic.statistic.statistics.map : new Map<string, MapStatistic>()) : new Map<string, MapStatistic>()
+        input.statistics.map
     )
 
     function createMapWinrateOverviewChart(mapStatisticsList: Map<string, MapStatistic>) {
         const mapChartArray: any[] = []
         const dataMap = new Map()
         mapStatisticsList.forEach((mapStatistic, mapName) => {
-            dataMap.set(mapName, mapStatistic.winRate)
+            dataMap.set(mapName, Number(mapStatistic.winRate.replace("%", "")))
         });
 
         const data = {
@@ -46,7 +41,7 @@ function MapStats(statistic: any) {
                         fontColor: theme.palette.text.primary
                     }
                 }],
-                yAxes:[{
+                yAxes: [{
                     ticks: {
                         fontColor: theme.palette.text.primary
                     },
@@ -64,62 +59,16 @@ function MapStats(statistic: any) {
                 <HorizontalBar data={data} options={options}/>
             </Grid>
         )
-        mapChartArray.push(
-            <Grid item sm={6} xs={12}>
-            </Grid>
-        )
         return mapChartArray
     }
 
-    function createMapWinrateCharts(mapStatisticsList: Map<string, MapStatistic>) {
-        const mapChartArray: any[] = []
-        mapStatisticsList.forEach((mapStatistic, mapName) => {
-            if (mapStatistic.total === 0) {
-                return
-            }
-
-            const options = {
-                legend: {
-                    display: true,
-                    reverse: true,
-                    labels: {
-                        fontColor: theme.palette.text.primary
-                    }
-                },
-                title: {
-                    display: true,
-                    text: "Win/lose-ratio on " + mapName,
-                    fontColor: theme.palette.text.primary
-                }
-            }
-            const data = {
-                labels: ['won', 'lost'],
-                datasets: [
-                    {
-                        label: 'MapStatistics',
-                        backgroundColor: chartColors('warm', 2, 'pie'),
-                        borderWidth: 0,
-                        data: [mapStatistic.won, mapStatistic.lost]
-                    }
-                ]
-            };
-
-            mapChartArray.push(
-                <Grid item sm={6} xs={12} style={{textAlign: "center"}}>
-                    <Pie data={data} options={options}/>
-                    <Typography
-                        variant={"body1"}>Winrate: {((mapStatistic.won / mapStatistic.total) * 100).toFixed(2)}%</Typography>
-                </Grid>
-            )
-
-        });
-        return mapChartArray
-    }
-
+    const headers = ['on Map', 'total', 'win', 'lose', 'winrate']
     return (
         <Grid container spacing={3}>
             {mapWinRateOverviewChart}
-            {mapWinrateCharts}
+            <Grid item sm={6} xs={12}>
+                <CustomMapTable headers={headers} data={input.statistics.map}/>
+            </Grid>
         </Grid>
     )
 }
