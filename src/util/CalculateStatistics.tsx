@@ -262,7 +262,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
             }
         }
         host.hostedPercentage = (host.hosted + host.notHosted > 0) ?
-            ((host.hosted / (host.hosted + host.notHosted)) * 100).toFixed(2) : "0"
+            ((host.hosted / (host.hosted + host.notHosted)) * 100).toFixed(2) + "%": "Never"
         mapMap.forEach(mapStatistic => {
                 mapStatistic.winRate = Number(((mapStatistic.won / mapStatistic.total) * 100).toFixed(2))
                 //ToDo: fill racestats inside map
@@ -288,7 +288,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
             map: mapMap,
             race: raceStatisticList,
             host: host,
-            avgGameTime: ((gameTimes / gameCount).toFixed(2) + " min"),
+            avgGameTime: (gameCount > 0) ?((gameTimes / gameCount).toFixed(2) + " min") : 0,
             versus: versusMap,
             mmrMap: mmrMap,
             mostPlayedRace: mostPlayedRaceNumber,
