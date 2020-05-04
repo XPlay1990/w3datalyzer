@@ -1,5 +1,5 @@
 import React from 'react';
-import {MapStatistic, RaceStatisticList} from "../util/CalculateStatistics";
+import {RaceStatisticList} from "../util/CalculateStatistics";
 import {chartColors} from "../util/ChartColors";
 import {Grid, Typography, useTheme} from "@material-ui/core";
 import {HorizontalBar, Pie} from "react-chartjs-2";
@@ -14,7 +14,7 @@ function Race(statistic: any) {
         const raceWinrateChart: any[] = []
         const dataMap = new Map()
         for (const raceStatistic of Object.entries(raceStats)) {
-            dataMap.set(raceStatistic[0], raceStatistic[1].winrate)
+            dataMap.set(raceStatistic[0], raceStatistic[1].winRate)
         }
 
         const data = {

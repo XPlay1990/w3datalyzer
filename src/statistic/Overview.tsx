@@ -4,7 +4,7 @@ import {MapStatistic} from "../util/CalculateStatistics";
 import {chartColors} from "../util/ChartColors";
 import {Grid, useTheme} from "@material-ui/core";
 import {Bar, Line} from "react-chartjs-2";
-import moment from "moment";
+import { DateTime } from "luxon";
 import './Overview.css'
 
 function Overview(statistic: any) {
@@ -23,7 +23,7 @@ function Overview(statistic: any) {
     function createMMrChart(mmrMap: Map<any, number>) {
         const dateArray = []
         for (const dateEntry of Array.from(mmrMap.keys()).reverse()) {
-            dateArray.push(moment(dateEntry).format('DD.MM.YYYY H:mm'))
+            dateArray.push(DateTime.fromJSDate(dateEntry).toLocaleString({ weekday: 'short', month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' }))
         }
         const data = {
             labels: dateArray,

@@ -17,3 +17,8 @@ export const W3CHAMPIONS_PROFILE_URL = (playerBattleTag: string) => {
     let battleTag = playerBattleTag.split('#');
     return (`${W3CHAMPIONS_BASE_URL}/player/${battleTag[0]}/${battleTag[1]}`)
 }
+
+
+export const GATEWAY_EU = 20
+export const GAMEMODE_1v1 = 1
+export const GAMEMODE_2v2_AT = 6

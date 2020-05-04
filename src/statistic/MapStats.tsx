@@ -22,7 +22,7 @@ function MapStats(statistic: any) {
         const mapChartArray: any[] = []
         const dataMap = new Map()
         mapStatisticsList.forEach((mapStatistic, mapName) => {
-            dataMap.set(mapName, mapStatistic.winrate)
+            dataMap.set(mapName, mapStatistic.winRate)
         });
 
         const data = {
