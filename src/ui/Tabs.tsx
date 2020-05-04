@@ -30,13 +30,17 @@ function TabBar(props: any) {
     }
 
     return (
-        <Tabs value={selectedTab} onChange={(event, newValue) => {
-            setSelectedTab(newValue);
-            history.push(
-                moduleMap.get(newValue)(
-                    encodeURIComponent(localStorage.getItem(STORAGE_BATTLETAG) || ''),
-                    encodeURIComponent(localStorage.getItem(STORAGE_GATEWAY) || DEFAULT_GATEWAY)))
-        }}>
+        <Tabs value={selectedTab}
+              onChange={(event, newValue) => {
+                  setSelectedTab(newValue);
+                  history.push(
+                      moduleMap.get(newValue)(
+                          encodeURIComponent(localStorage.getItem(STORAGE_BATTLETAG) || ''),
+                          encodeURIComponent(localStorage.getItem(STORAGE_GATEWAY) || DEFAULT_GATEWAY)))
+              }}
+              variant="scrollable"
+              scrollButtons="on"
+        >
             {tabs}
         </Tabs>
     );
