@@ -3,9 +3,13 @@ import {Tab, Tabs} from "@material-ui/core";
 import {useHistory} from 'react-router-dom'
 import {
     APP_PATH_STATISTICS_2v2,
-    APP_PATH_STATISTICS_MAP, APP_PATH_STATISTICS_MAPRACE,
+    APP_PATH_STATISTICS_MAP,
+    APP_PATH_STATISTICS_MAPRACE,
     APP_PATH_STATISTICS_OVERVIEW,
-    APP_PATH_STATISTICS_RACE, STORAGE_BATTLETAG
+    APP_PATH_STATISTICS_RACE,
+    DEFAULT_GATEWAY,
+    STORAGE_BATTLETAG,
+    STORAGE_GATEWAY
 } from "../resources/AppConstants";
 
 function TabBar(props: any) {
@@ -28,7 +32,10 @@ function TabBar(props: any) {
     return (
         <Tabs value={selectedTab} onChange={(event, newValue) => {
             setSelectedTab(newValue);
-            history.push(moduleMap.get(newValue)(encodeURIComponent(localStorage.getItem(STORAGE_BATTLETAG) || '')))
+            history.push(
+                moduleMap.get(newValue)(
+                    encodeURIComponent(localStorage.getItem(STORAGE_BATTLETAG) || ''),
+                    encodeURIComponent(localStorage.getItem(STORAGE_GATEWAY) || DEFAULT_GATEWAY)))
         }}>
             {tabs}
         </Tabs>
