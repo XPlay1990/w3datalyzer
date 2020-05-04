@@ -6,8 +6,15 @@ import SendIcon from '@material-ui/icons/Send';
 import {fetchBattleTagCandidates} from "./api/ApiUtils";
 import './LandingPage.css'
 import {useHistory} from "react-router-dom";
-import {APP_PATH_STATISTICS, STORAGE_BATTLETAG, STORAGE_GATEWAY} from "./resources/AppConstants";
+import {
+    APP_PATH_STATISTICS,
+    GATEWAY_EU,
+    GATEWAY_NA,
+    STORAGE_BATTLETAG,
+    STORAGE_GATEWAY
+} from "./resources/AppConstants";
 import ReactGA from 'react-ga';
+import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 
 interface Suggestion {
     mmr: { rating: number },
@@ -21,6 +28,12 @@ interface Suggestion {
 function LandingPage() {
     const [playerTag, setPlayerTag] = useState<string>('')
     const [suggestions, setSuggestions] = useState<any[]>([])
+    const [gateway, setGateway] = React.useState(GATEWAY_EU);
+
+    const handleSetGateway = (newGateway: number) => {
+        setGateway(newGateway);
+    };
+
     let history = useHistory()
 
 
@@ -82,11 +95,21 @@ function LandingPage() {
                         label: playerTag
                     });
                     localStorage.setItem(STORAGE_BATTLETAG, playerTag)
-                    const gateway="20"
-                    localStorage.setItem(STORAGE_GATEWAY, gateway)
+                    localStorage.setItem(STORAGE_GATEWAY, gateway.toString())
                     history.push(`${APP_PATH_STATISTICS}/${encodeURIComponent(playerTag)}/${encodeURIComponent(gateway)}`)
                 }}
             >Send</Button>
+            <ToggleButtonGroup size="small" value={gateway} exclusive
+                               onChange={(event, value) => handleSetGateway(value)}
+            style={{margin:"auto"}}
+            >
+                <ToggleButton key={0} value={GATEWAY_EU}>
+                    EU
+                </ToggleButton>,
+                <ToggleButton key={1} value={GATEWAY_NA}>
+                    NA
+                </ToggleButton>,
+            </ToggleButtonGroup>
         </Box>
     );
 }

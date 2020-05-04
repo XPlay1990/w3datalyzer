@@ -13,7 +13,7 @@ export const STORAGE_BATTLETAG = 'battleTag'
 export const STORAGE_GATEWAY = 'gateway'
 
 export const GATEWAY_EU = 20
-export const GATEWAY_US = 10
+export const GATEWAY_NA = 10
 export const GAMEMODE_1v1 = 1
 export const GAMEMODE_2v2_AT = 6
 export const DEFAULT_GATEWAY = GATEWAY_EU.toString()
