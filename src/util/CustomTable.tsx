@@ -165,7 +165,7 @@ export function CustomVersusTable(customTableProps: CustomTableProps) {
                     objectValue => {
                         valueCells.push(
                             <StyledTableCell key={valueCells.length}>
-                                {objectValue[1] as Number}
+                                {objectValue[1] as string}
                             </StyledTableCell>)
                     }
                 )

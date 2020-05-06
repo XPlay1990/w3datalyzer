@@ -47,7 +47,7 @@ interface VersusObject {
     total: number,
     win: number,
     lose: number,
-    winRate: number
+    winRate: string
 }
 
 export interface StatisticDataFetch {
@@ -147,7 +147,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                                         total: 0,
                                         win: 0,
                                         lose: 0,
-                                        winRate: 0
+                                        winRate:NO_GAMES_TEXT
                                     }
                                 }
                                 versusObject.total += 1
@@ -198,7 +198,11 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                                 // player.won
                             } else {
                                 // searched player
-                                mmrMap.set(new Date(match.endTime), Math.round(player.updatedMmr.rating))
+                                if(player.updatedMmr) {
+                                    mmrMap.set(new Date(match.endTime), Math.round(player.updatedMmr.rating))
+                                } else {
+                                    mmrMap.set(new Date(match.endTime), Math.round(player.mmr.rating))
+                                }
                                 let oldValue = playedRaceMap.get(player.race)
                                 playedRaceMap.set(player.race, (oldValue ? (oldValue + 1) : 1))
                             }
@@ -240,14 +244,15 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                                     team.won ? savedTeam.stats.win += 1 : savedTeam.stats.lose += 1
                                     savedTeam.stats.total += 1
                                     savedTeam.stats.winRate =
-                                        Number(((savedTeam.stats.win / savedTeam.stats.total) * 100).toFixed(2))
+                                        savedTeam.stats.total?
+                                        ((savedTeam.stats.win / savedTeam.stats.total) * 100).toFixed(2)+ "%" : NO_GAMES_TEXT
                                 } else {
                                     savedTeam = {
                                         stats: {
                                             win: team.won ? 1 : 0,
                                             lose: team.won ? 0 : 1,
                                             total: 1,
-                                            winRate: team.won ? 100 : 0,
+                                            winRate: team.won ? "100%" : "0%",
                                         },
                                         playerNames: team.playerNames,
                                         rank: team.rank,
@@ -279,7 +284,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                 ((raceStatistic.won / raceStatistic.total) * 100).toFixed(2) + "%" : NO_GAMES_TEXT
         }
         versusMap.forEach(versusObject => {
-            versusObject.winRate = Number(((versusObject.win / versusObject.total) * 100).toFixed(2))
+            versusObject.winRate = ((versusObject.win / versusObject.total) * 100).toFixed(2) + "%"
         })
 
         const playedRaceCount: any[] = []
