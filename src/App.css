@@ -6,7 +6,7 @@
     margin-right: auto;
     min-height: 100%;
     flex: 1;
-    opacity: 95%;
+    opacity: 0.95;
 }
 
 .AppContent {

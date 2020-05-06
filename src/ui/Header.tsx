@@ -19,7 +19,7 @@ function Header(darkModeState: DarkModeState) {
 
         ReactGA.event({
             category: "ChangeDisplayMode",
-            action: isDarkMode ? 'dark' : 'light',
+            action: (isDarkMode === "true") ? 'dark' : 'light',
         });
     }
 
