@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch} from 'react';
 import {Box, Grid, Tooltip, Typography} from "@material-ui/core";
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import './Header.css'
@@ -6,17 +6,20 @@ import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import ReactGA from 'react-ga';
 import {IS_DARK_MODE} from "../resources/AppConstants";
 
-function Header() {
-    const [isDarkMode, setIsDarkMode] = React.useState(localStorage.getItem(IS_DARK_MODE));
+interface DarkModeState {
+    isDarkMode: string,
+    setIsDarkMode: Dispatch<string>
+}
+
+function Header(darkModeState: DarkModeState) {
 
     function changeDarkMode(event: any, isDarkMode: string) {
-        setIsDarkMode(isDarkMode);
+        darkModeState.setIsDarkMode(isDarkMode);
         localStorage.setItem(IS_DARK_MODE, isDarkMode);
-        window.location.reload();
 
         ReactGA.event({
             category: "ChangeDisplayMode",
-            action: isDarkMode,
+            action: isDarkMode ? 'dark' : 'light',
         });
     }
 
@@ -34,7 +37,7 @@ function Header() {
                 <Grid item sm={6} xs={12} style={{display: "flex", alignContent: "flex-end"}}>
                     <Tooltip title={"Change color mode"}>
                         <ToggleButtonGroup
-                            value={isDarkMode}
+                            value={darkModeState.isDarkMode}
                             exclusive
                             size="medium"
                             onChange={changeDarkMode}

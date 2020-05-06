@@ -22,10 +22,11 @@ ReactGA.set({
 
 function App() {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-    localStorage.setItem(IS_DARK_MODE, (localStorage.getItem(IS_DARK_MODE) || prefersDarkMode.toString()));
+    const [isDarkMode, setIsDarkMode] = React.useState(localStorage.getItem(IS_DARK_MODE) || prefersDarkMode.toString());
+
     let theme = createMuiTheme({
         palette: {
-            type: (localStorage.getItem(IS_DARK_MODE) === 'true') ? 'dark' : 'light', // mediaquery on dark theme
+            type: (isDarkMode === 'true') ? 'dark' : 'light', // mediaquery on dark theme
             // primary: {main: blue[500]},
             // secondary: red,
         },
@@ -36,7 +37,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <Paper className="AppBox" color={"primary"}>
-                <Header/>
+                <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}/>
                 <Box className="AppContent">
                     <Switch>
                         <Route path={`${APP_PATH_STATISTICS}/:battleTag/:gateway`} component={Statistics}/>
