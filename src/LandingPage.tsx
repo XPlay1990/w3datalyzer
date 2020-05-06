@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import './App.css';
-import {Box, Button, TextField} from "@material-ui/core";
+import {Box, Button, Grid, ListItem, ListItemIcon, ListItemText, TextField, Typography} from "@material-ui/core";
+import MailIcon from '@material-ui/icons/Mail';
 import SendIcon from '@material-ui/icons/Send';
 import {fetchBattleTagCandidates} from "./api/ApiUtils";
 import './LandingPage.css'
@@ -48,69 +49,83 @@ function LandingPage() {
     }, [playerTag]);
 
     return (
-        <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
-            <Autocomplete
-                id="playerTag"
-                style={{width: 300, marginRight: "50px", marginBottom: "20px"}}
-                options={suggestions}
-                debug
-                autoHighlight
-                filterOptions={(options, state) => {
-                    return suggestions
-                }}
-
-                getOptionLabel={(option) => decodeURIComponent(option.battleTag)}
-                renderOption={(option) => (
-                    <React.Fragment>
-                        <div>
-                            {option.battleTag}
-                            {/*{option.wins}*/}
-                            {/*{option.loses}*/}
-                        </div>
-                    </React.Fragment>
-                )}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label="Enter battleTag"
-                        // variant="outlined"
-                        onChange={event => {
-                            setPlayerTag(event.target.value)
+        <Grid container spacing={3}>
+            <Grid item xs={12} sm={8}>
+                <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
+                    <Autocomplete
+                        id="playerTag"
+                        style={{width: 300, marginRight: "50px", marginBottom: "20px"}}
+                        options={suggestions}
+                        debug
+                        autoHighlight
+                        filterOptions={(options, state) => {
+                            return suggestions
                         }}
+
+                        getOptionLabel={(option) => decodeURIComponent(option.battleTag)}
+                        renderOption={(option) => (
+                            <React.Fragment>
+                                <div>
+                                    {option.battleTag}
+                                    {/*{option.wins}*/}
+                                    {/*{option.loses}*/}
+                                </div>
+                            </React.Fragment>
+                        )}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Enter battleTag"
+                                // variant="outlined"
+                                onChange={event => {
+                                    setPlayerTag(event.target.value)
+                                }}
+                            />
+                        )}
+                        onChange={(event: any, value: any) => setPlayerTag(value.battleTag)}
                     />
-                )}
-                onChange={(event: any, value: any) => setPlayerTag(value.battleTag)}
-            />
-            <Button
-                variant="contained"
-                color="primary"
-                // className={classes.button}
-                style={{marginBottom: "auto", marginTop: "auto"}}
-                endIcon={<SendIcon/>}
-                disabled={!playerTag}
-                onClick={event => {
-                    ReactGA.event({
-                        category: "LandingPage",
-                        action: "toStatistic",
-                        label: playerTag
-                    });
-                    localStorage.setItem(STORAGE_BATTLETAG, playerTag)
-                    localStorage.setItem(STORAGE_GATEWAY, gateway.toString())
-                    history.push(`${APP_PATH_STATISTICS}/${encodeURIComponent(playerTag)}/${encodeURIComponent(gateway)}`)
-                }}
-            >Send</Button>
-            <ToggleButtonGroup size="small" value={gateway} exclusive
-                               onChange={(event, value) => handleSetGateway(value)}
-            style={{margin:"auto"}}
-            >
-                <ToggleButton key={0} value={GATEWAY_EU}>
-                    EU
-                </ToggleButton>,
-                <ToggleButton key={1} value={GATEWAY_NA}>
-                    NA
-                </ToggleButton>,
-            </ToggleButtonGroup>
-        </Box>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        // className={classes.button}
+                        style={{marginBottom: "auto", marginTop: "auto"}}
+                        endIcon={<SendIcon/>}
+                        disabled={!playerTag}
+                        onClick={event => {
+                            ReactGA.event({
+                                category: "LandingPage",
+                                action: "toStatistic",
+                                label: playerTag
+                            });
+                            localStorage.setItem(STORAGE_BATTLETAG, playerTag)
+                            localStorage.setItem(STORAGE_GATEWAY, gateway.toString())
+                            history.push(`${APP_PATH_STATISTICS}/${encodeURIComponent(playerTag)}/${encodeURIComponent(gateway)}`)
+                        }}
+                    >Send</Button>
+                    <ToggleButtonGroup size="small" value={gateway} exclusive
+                                       onChange={(event, value) => handleSetGateway(value)}
+                                       style={{margin: "auto"}}
+                    >
+                        <ToggleButton key={0} value={GATEWAY_EU}>
+                            EU
+                        </ToggleButton>,
+                        <ToggleButton key={1} value={GATEWAY_NA}>
+                            NA
+                        </ToggleButton>,
+                    </ToggleButtonGroup>
+                </Box>
+            </Grid>
+            <Grid item xs={12} sm={8}>
+                <Typography variant={"body1"}>Got suggestions? Contact me at: <ReactGA.OutboundLink
+                    eventLabel="Contact_Mail" to={'mailto:j_adamczyk@hotmail.com'}
+                    rel="noopener noreferrer">
+                    <ListItem button key='Mail'>
+                        <ListItemIcon><MailIcon/></ListItemIcon>
+                        <ListItemText primary='j_adamczyk@hotmail.com'/>
+                    </ListItem>
+                </ReactGA.OutboundLink></Typography>
+            </Grid>
+        </Grid>
     );
 }
 

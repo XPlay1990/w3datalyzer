@@ -12,8 +12,12 @@ code {
     monospace;
 }
 
+:root {
+    --root-background:url(resources/background/WarcraftIII_NightElf_Wallpaper_cut-min.jpg)
+}
+
 #root {
-    background: url(resources/background.jpg) no-repeat center center fixed;
+    background: var(--root-background) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

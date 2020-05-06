@@ -9,6 +9,10 @@ import OrcImage from "../resources/orc.jpg";
 import ElfImage from "../resources/elf.jpg";
 import HumanImage from "../resources/human.jpg";
 import UndeadImage from "../resources/undead.jpg";
+import HumanBackground from "../resources/background/WarcraftIII_Human_Wallpaper-min.jpg";
+import OrcBackground from "../resources/background/WarcraftIII_Orc_Wallpaper-min.jpg";
+import UndeadBackground from "../resources/background/WarcraftIII_Undead_Wallpaper-min.jpg";
+import ElfBackground from "../resources/background/WarcraftIII_NightElf_Wallpaper_cut-min.jpg";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import {useHistory} from "react-router-dom";
 
@@ -31,18 +35,22 @@ function StatisticsHeader(input: Input) {
             case 1:
                 //human
                 setRaceImage(HumanImage)
+                document.documentElement.style.setProperty("--root-background", 'url(' + HumanBackground + ')');
                 break
             case 2:
                 //orc
                 setRaceImage(OrcImage)
+                document.documentElement.style.setProperty("--root-background", 'url(' + OrcBackground + ')');
                 break
             case 4:
                 //elf
                 setRaceImage(ElfImage)
+                document.documentElement.style.setProperty("--root-background", 'url(' + ElfBackground + ')');
                 break
             case 8: //wtf pad
                 //undead
                 setRaceImage(UndeadImage)
+                document.documentElement.style.setProperty("--root-background", 'url(' + UndeadBackground + ')');
                 break
             default:
                 setRaceImage(RdmImage)
