@@ -236,7 +236,7 @@ export function Custom2v2Table(customTableProps: CustomTableProps) {
                 <StyledTableCell>{teamStatistic.stats.lose}</StyledTableCell>
             )
             statsCells.push(
-                <StyledTableCell>{teamStatistic.stats.winRate}%</StyledTableCell>
+                <StyledTableCell>{teamStatistic.stats.winRate}</StyledTableCell>
             )
             if (teamStatistic.rank === -1) {
                 statsCells.push(

@@ -42,7 +42,7 @@ function App() {
                     <Switch>
                         <Route path={`${APP_PATH_STATISTICS}/:battleTag/:gateway`} component={Statistics}/>
                         <Route path={FORBIDDEN_URL} component={Forbidden}/>
-                        <Route path={APP_PATH_LandingPage} render={() => <LandingPage/>}/>
+                        <Route exact path={APP_PATH_LandingPage} render={() => <LandingPage/>}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </Box>
