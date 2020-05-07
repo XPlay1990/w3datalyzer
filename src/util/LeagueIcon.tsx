@@ -13,7 +13,7 @@ export function LeagueIcon(input: Input) {
 
     return (
         <Box display={"flex"} flexDirection={"row"}>
-            <Typography variant={"body1"}>{input.rank}.</Typography>
+            <Typography variant={"body1"}>Rank {input.rank}</Typography>
             <Tooltip
                 title={`${getLeagueName(input.leagueOrder)}`}
             >

@@ -82,7 +82,8 @@ function StatisticsHeader(input: Input) {
                     history.push(`${APP_PATH_LandingPage}`)
                 }}
             >Back</Button>
-            <Box display={"flex"} flexDirection={"column"} style={{alignItems: "center"}}>
+            <Box display={"flex"} flexDirection={"column"}
+                 style={{alignItems: "center", marginLeft: "auto", marginRight: "auto"}}>
                 <Typography
                     variant={"h3"}
                     style={{marginLeft: "auto", marginRight: "auto"}}
@@ -99,22 +100,24 @@ function StatisticsHeader(input: Input) {
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "center",
-                    width: "min-content",
+                    width: "min-intrinsic",
+                    flexWrap:"wrap",
                     padding: "10px"
                 }}>
+                    <Typography variant={"body1"}>Solo:</Typography>
                     <Typography variant={"body1"} style={{color: "green"}}>{wins}</Typography>
                     <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
                     <Typography variant={"body1"} style={{color: "red"}}>{losses}</Typography>
                     <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
-                    <Typography variant={"body1"}>{winrate}</Typography>
+                    <Typography variant={"body1"}>Winrate: {winrate}</Typography>
                     <LeagueIcon
                         leagueId={solo.ranking.leagueId}
                         leagueOrder={solo.ranking.leagueOrder}
                         rank={solo.ranking.rank}
                     />
-                    <Typography variant={"body1"}>{solo.ranking.rp.toFixed(0)}</Typography>
+                    <Typography variant={"body1"}>RP:{solo.ranking.rp.toFixed(0)}</Typography>
                     <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
-                    <Typography variant={"body1"}>{solo.mmr.rating.toFixed(0)}</Typography>
+                    <Typography variant={"body1"}>MMR:{solo.mmr.rating.toFixed(0)}</Typography>
                 </Paper>
             </Box>
         </Box>
