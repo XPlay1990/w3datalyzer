@@ -1,4 +1,4 @@
-import {Match, useFetchMatchData} from "../api/ApiUtils";
+import {Match, useGetMatchData} from "../api/ApiUtils";
 import {useEffect, useState} from "react";
 import {GAMEMODE_1v1, GAMEMODE_2v2_AT, NO_GAMES_TEXT} from "../resources/AppConstants";
 
@@ -64,7 +64,7 @@ export interface Team2v2Statistics {
 }
 
 export function useCalculateStatistics(playerBattleTag: string, gateway: number) {
-    const playerMatchDataResponseList = useFetchMatchData(playerBattleTag)
+    const playerMatchDataResponseList = useGetMatchData(playerBattleTag)
     const [statisticValues, setStatisticValues] = useState<StatisticDataFetch>({
         total: 0,
         isLoading: true,

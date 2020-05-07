@@ -2,7 +2,6 @@ import React from 'react';
 import {Custom2v2Table} from "../../util/CustomTable";
 import {Grid} from "@material-ui/core";
 import {StatisticInput} from "../Overview";
-import "./Team2v2.css"
 
 function Team2v2(statistic: StatisticInput) {
 

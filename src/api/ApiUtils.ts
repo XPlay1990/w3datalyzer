@@ -1,25 +1,5 @@
 import {useEffect, useState} from 'react';
-
-export function getLeagueName(league: number) {
-    switch (league) {
-        case 0:
-            return "Grand Master"
-        case 1:
-            return "Master"
-        case 2:
-            return "Diamond"
-        case 3:
-            return "Platinum"
-        case 4:
-            return "Gold"
-        case 5:
-            return "Silver"
-        case 6:
-            return "Bronze"
-        default:
-            return ""
-    }
-}
+import {W3CHAMPIONS_API_BASE_URL} from "../resources/AppConstants";
 
 export interface Match {
     createdAt: Date,
@@ -84,7 +64,7 @@ export interface FetchData {
     data: any
 }
 
-export function useFetchMatchData(battleTag: string) {
+export function useGetMatchData(battleTag: string) {
     const limit = 100
     const offset = 0
     const headers = new Headers()
@@ -96,9 +76,8 @@ export function useFetchMatchData(battleTag: string) {
         headers: headers
     }
 
-    return useFetchMatchApi(options, limit, offset, `https://api.w3champions.com/player/${encodeURIComponent(battleTag)}/match`)
+    return useFetchMatchApi(options, limit, offset, `${W3CHAMPIONS_API_BASE_URL}/player/${encodeURIComponent(battleTag)}/match`)
 }
-
 
 function useFetchMatchApi(options: any, limit: number, offset: number, baseUrl: string) {
     const [data, setData] = useState<any[]>([]);
@@ -121,6 +100,36 @@ function useFetchMatchApi(options: any, limit: number, offset: number, baseUrl: 
             matchCount = json.total
         }
         setData(matchData)
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        fetchUrl();
+    }, []);
+    return {data: data, isLoading: isLoading};
+}
+
+export function useGetPlayerStats(battleTag: string) {
+    const headers = new Headers()
+    headers.append("Content-Type", "application/json");
+
+    const options = {
+        method: 'GET',
+        mode: 'cors' as RequestMode,
+        headers: headers,
+        url: `${W3CHAMPIONS_API_BASE_URL}/player/${encodeURIComponent(battleTag)}/stats`
+    }
+    return useFetchPlayerStats(options)
+}
+
+function useFetchPlayerStats(options: any) {
+    const [data, setData] = useState<any[]>([]);
+    const [isLoading, setLoading] = useState(true);
+
+    async function fetchUrl() {
+        const response = await fetch(options.url, options);
+        const json = await response.json();
+        setData(json)
         setLoading(false);
     }
 

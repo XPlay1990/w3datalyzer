@@ -1,0 +1,106 @@
+{
+  "account": "KnOfF#21435",
+  "data": {
+    "stats": {
+      "human": {
+        "wins": 0,
+        "losses": 0
+      },
+      "orc": {
+        "wins": 104,
+        "losses": 83
+      },
+      "undead": {
+        "wins": 0,
+        "losses": 0
+      },
+      "night_elf": {
+        "wins": 1,
+        "losses": 1
+      },
+      "random": {
+        "wins": 3,
+        "losses": 2
+      },
+      "total": {
+        "wins": 108,
+        "losses": 86
+      }
+    },
+    "ladder": {
+      "1": {
+        "wins": 0,
+        "losses": 1
+      },
+      "2": {
+        "wins": 0,
+        "losses": 0
+      },
+      "3": {
+        "wins": 0,
+        "losses": 0
+      },
+      "4": {
+        "wins": 0,
+        "losses": 0
+      },
+      "5": {
+        "wins": 0,
+        "losses": 0
+      },
+      "6": {
+        "wins": 0,
+        "losses": 0
+      },
+      "7": {
+        "wins": 0,
+        "losses": 0
+      },
+      "8": {
+        "wins": 0,
+        "losses": 0
+      },
+      "10": {
+        "solo": {
+          "mmr": {
+            "rating": 1304.5157350785892,
+            "rd": 251.1808768967472,
+            "vol": 0.05999942269354743
+          },
+          "ranking": {
+            "progress": 0.5,
+            "rp": 2609.0314701571783,
+            "lastGame": 1588175376823,
+            "rank": -1
+          },
+          "wins": 0,
+          "losses": 1
+        }
+      },
+      "20": {
+        "solo": {
+          "mmr": {
+            "rating": 2036.751753718478,
+            "rd": 62.84369888864895,
+            "vol": 0.05994975803059726
+          },
+          "ranking": {
+            "progress": 0.7550000000000046,
+            "rp": 6150.990296229841,
+            "lastGame": 1588781719199,
+            "rank": 57,
+            "leagueId": 2,
+            "leagueOrder": 2
+          },
+          "league": {
+            "order": 2,
+            "name": "Diamond League",
+            "division": 1
+          },
+          "wins": 90,
+          "losses": 78
+        }
+      }
+    }
+  }
+}

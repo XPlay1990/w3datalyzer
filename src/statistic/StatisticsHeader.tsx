@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import '../App.css';
-import {APP_PATH_LandingPage, W3CHAMPIONS_PROFILE_URL} from "../resources/AppConstants";
+import {APP_PATH_LandingPage, NO_GAMES_TEXT, W3CHAMPIONS_PROFILE_URL} from "../resources/AppConstants";
 import './Statistic.css'
-import {Box, Button, Typography} from "@material-ui/core";
+import {Box, Button, Paper, Typography} from "@material-ui/core";
 import ReactGA from "react-ga";
 import RdmImage from "../resources/rdm.jpg";
 import OrcImage from "../resources/orc.jpg";
@@ -15,16 +15,24 @@ import UndeadBackground from "../resources/background/WarcraftIII_Undead_Wallpap
 import ElfBackground from "../resources/background/WarcraftIII_NightElf_Wallpaper_cut-min.jpg";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import {useHistory} from "react-router-dom";
+import {LeagueIcon} from "../util/LeagueIcon";
 
 interface Input {
     race: number | undefined,
-    battleTag: string
+    battleTag: string,
+    gateway: number,
+    playerStats: any
 }
 
 function StatisticsHeader(input: Input) {
     const [raceImage, setRaceImage] = useState(RdmImage)
 
     let history = useHistory()
+
+    const solo = input.playerStats.data.ladder[input.gateway].solo
+    const wins = Number(solo.wins)
+    const losses = Number(solo.losses)
+    const winrate = wins + losses > 0 ? ((wins / (wins + losses) * 100).toFixed(2) + "%") : NO_GAMES_TEXT
 
     useEffect(() => {
         switch (input.race) {
@@ -74,17 +82,41 @@ function StatisticsHeader(input: Input) {
                     history.push(`${APP_PATH_LandingPage}`)
                 }}
             >Back</Button>
-            <Typography
-                variant={"h3"}
-                style={{marginLeft: "auto", marginRight: "auto"}}
-                className="StatisticsTitle"
-            >Statistics for <img src={raceImage} className="raceImage" alt=""/>
-                <ReactGA.OutboundLink eventLabel="w3champions Profile"
-                                      to={W3CHAMPIONS_PROFILE_URL(input.battleTag)}
-                                      rel="noopener noreferrer">
-                    {input.battleTag}
-                </ReactGA.OutboundLink>
-            </Typography>
+            <Box display={"flex"} flexDirection={"column"} style={{alignItems: "center"}}>
+                <Typography
+                    variant={"h3"}
+                    style={{marginLeft: "auto", marginRight: "auto"}}
+                    className="StatisticsTitle"
+                >Statistics for <img src={raceImage} className="raceImage" alt=""/>
+                    <ReactGA.OutboundLink eventLabel="w3champions Profile"
+                                          to={W3CHAMPIONS_PROFILE_URL(input.battleTag)}
+                                          rel="noopener noreferrer">
+                        {input.battleTag}
+                    </ReactGA.OutboundLink>
+                </Typography>
+
+                <Paper style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    width: "min-content",
+                    padding: "10px"
+                }}>
+                    <Typography variant={"body1"} style={{color: "green"}}>{wins}</Typography>
+                    <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
+                    <Typography variant={"body1"} style={{color: "red"}}>{losses}</Typography>
+                    <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
+                    <Typography variant={"body1"}>{winrate}</Typography>
+                    <LeagueIcon
+                        leagueId={solo.ranking.leagueId}
+                        leagueOrder={solo.ranking.leagueOrder}
+                        rank={solo.ranking.rank}
+                    />
+                    <Typography variant={"body1"}>{solo.ranking.rp.toFixed(0)}</Typography>
+                    <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
+                    <Typography variant={"body1"}>{solo.mmr.rating.toFixed(0)}</Typography>
+                </Paper>
+            </Box>
         </Box>
     )
 }

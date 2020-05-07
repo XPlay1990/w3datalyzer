@@ -23,6 +23,7 @@ export const IS_DARK_MODE = 'darkMode';
 export const NO_GAMES_TEXT = "Not played"
 
 export const W3CHAMPIONS_BASE_URL = 'https://w3champions.com'
+export const W3CHAMPIONS_API_BASE_URL = 'https://api.w3champions.com'
 export const W3CHAMPIONS_PROFILE_URL = (playerBattleTag: string) => {
     let battleTag = playerBattleTag.split('#');
     return (`${W3CHAMPIONS_BASE_URL}/player/${battleTag[0]}/${battleTag[1]}`)

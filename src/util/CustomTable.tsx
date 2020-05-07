@@ -9,12 +9,11 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Tooltip,
     withStyles
 } from '@material-ui/core';
 import {APP_PATH_STATISTICS_OVERVIEW, DEFAULT_GATEWAY, STORAGE_GATEWAY} from "../resources/AppConstants";
 import {MapStatistic, RaceStatisticList, Team2v2Statistics} from "./CalculateStatistics";
-import {getLeagueName} from "../api/ApiUtils";
+import {LeagueIcon} from "./LeagueIcon";
 
 interface CustomPairTableProps {
     headers: string[],
@@ -243,21 +242,17 @@ export function Custom2v2Table(customTableProps: CustomTableProps) {
                     <StyledTableCell>unranked</StyledTableCell>
                 )
             } else {
-                const leagueIcon =
-                    <Tooltip
-                        title={`${getLeagueName(teamStatistic.league.leagueId)} ${teamStatistic.league.leagueOrder}`}
-                    >
-                        <img src={`https://w3champions.com/leagues/${teamStatistic.league.leagueId}.png`} alt={"League"}
-                             className="LeagueIcon"
-                        />
-                    </Tooltip>
                 statsCells.push(
                     <StyledTableCell>
                         <Box display={"flex"} flexDirection={"row"} style={{
                             justifyContent: "flex-start", alignContent: "center",
-                            alignItems: "center", textAlign: "center", marginTop:"auto", marginBottom:"auto"
+                            alignItems: "center", textAlign: "center", marginTop: "auto", marginBottom: "auto"
                         }}>
-                            {teamStatistic.rank}.{leagueIcon}
+                            <LeagueIcon
+                                leagueId={teamStatistic.league.leagueId}
+                                leagueOrder={teamStatistic.league.leagueOrder}
+                                rank={teamStatistic.rank}
+                            />
                         </Box>
                     </StyledTableCell>
                 )
