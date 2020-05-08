@@ -12,8 +12,7 @@ interface Input {
 export function LeagueIcon(input: Input) {
 
     return (
-        <Box display={"flex"} flexDirection={"row"}>
-            <Typography variant={"body1"}>Rank {input.rank}</Typography>
+        <Box display={"flex"} flexDirection={"column"}>
             <Tooltip
                 title={`${getLeagueName(input.leagueOrder)}`}
             >
@@ -21,6 +20,7 @@ export function LeagueIcon(input: Input) {
                      className="LeagueIcon"
                 />
             </Tooltip>
+            <Typography variant={"body1"} noWrap align={"center"}>Rank {input.rank}</Typography>
         </Box>
     )
 }

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '../App.css';
 import {APP_PATH_LandingPage, NO_GAMES_TEXT, W3CHAMPIONS_PROFILE_URL} from "../resources/AppConstants";
 import './Statistic.css'
-import {Box, Button, Paper, Typography} from "@material-ui/core";
+import {Box, Button, Grid, Paper, Typography} from "@material-ui/core";
 import ReactGA from "react-ga";
 import RdmImage from "../resources/rdm.jpg";
 import OrcImage from "../resources/orc.jpg";
@@ -16,6 +16,7 @@ import ElfBackground from "../resources/background/WarcraftIII_NightElf_Wallpape
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import {useHistory} from "react-router-dom";
 import {LeagueIcon} from "../util/LeagueIcon";
+import "./StatisticHeader.css"
 
 interface Input {
     race: number | undefined,
@@ -100,24 +101,31 @@ function StatisticsHeader(input: Input) {
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "center",
-                    width: "min-intrinsic",
-                    flexWrap:"wrap",
+                    width: "auto",
+                    flexWrap: "wrap",
                     padding: "10px"
                 }}>
-                    <Typography variant={"body1"}>Solo:</Typography>
-                    <Typography variant={"body1"} style={{color: "green"}}>{wins}</Typography>
-                    <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
-                    <Typography variant={"body1"} style={{color: "red"}}>{losses}</Typography>
-                    <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
-                    <Typography variant={"body1"}>Winrate: {winrate}</Typography>
-                    <LeagueIcon
-                        leagueId={solo.ranking.leagueId}
-                        leagueOrder={solo.ranking.leagueOrder}
-                        rank={solo.ranking.rank}
-                    />
-                    <Typography variant={"body1"}>RP:{solo.ranking.rp.toFixed(0)}</Typography>
-                    <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
-                    <Typography variant={"body1"}>MMR:{solo.mmr.rating.toFixed(0)}</Typography>
+                    <Grid container spacing={2}>
+                        <Grid item sm={5}>
+                            <LeagueIcon
+                                leagueId={solo.ranking.leagueId}
+                                leagueOrder={solo.ranking.leagueOrder}
+                                rank={solo.ranking.rank}
+                            />
+                        </Grid>
+                        <Grid item sm={7}>
+                            <Typography variant={"body1"}>{solo.ranking.rp.toFixed(0)} rp</Typography>
+                            <Typography variant={"body1"}>{solo.mmr.rating.toFixed(0)} mmr</Typography>
+                            <Box display={"flex"} flexDirection={"row"}>
+                                <Typography variant={"body1"} style={{color: "green"}}>{wins}</Typography>
+                                <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
+                                <Typography variant={"body1"} style={{color: "red"}}>{losses}</Typography>
+                                <div className="SoloBorder">
+                                    <Typography variant={"body1"}>{winrate}</Typography>
+                                </div>
+                            </Box>
+                        </Grid>
+                    </Grid>
                 </Paper>
             </Box>
         </Box>
