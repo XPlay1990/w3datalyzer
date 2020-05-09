@@ -95,7 +95,7 @@ function Race(input: StatisticInput) {
                         const percentage = total > 0 ?
                             ((currentValue / total) * 100).toFixed(2) + "%" : NO_GAMES_TEXT
 
-                        return `${label}: ${percentage}, total: ${total}`;
+                        return `${label}: ${percentage}, total: ${currentValue}`;
                     }
                 }
             }
