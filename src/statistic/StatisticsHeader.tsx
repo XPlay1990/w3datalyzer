@@ -108,8 +108,8 @@ function StatisticsHeader(input: Input) {
                     <Grid container spacing={2}>
                         <Grid item sm={5}>
                             <LeagueIcon
-                                leagueId={solo.ranking.leagueId}
-                                leagueOrder={solo.ranking.leagueOrder}
+                                leagueDivision={solo.league.division}
+                                leagueOrder={solo.league.order}
                                 rank={solo.ranking.rank}
                             />
                         </Grid>

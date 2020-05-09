@@ -211,7 +211,6 @@ export function Custom2v2Table(customTableProps: CustomTableProps) {
             return null
         }
         customTableProps.data.forEach((teamStatistic: Team2v2Statistics) => {
-
             const playerNameCells = []
             for (const playerName of teamStatistic.playerNames) {
                 playerNameCells.push(
@@ -249,7 +248,6 @@ export function Custom2v2Table(customTableProps: CustomTableProps) {
                             alignItems: "center", textAlign: "center", marginTop: "auto", marginBottom: "auto"
                         }}>
                             <LeagueIcon
-                                leagueId={teamStatistic.league.leagueId}
                                 leagueOrder={teamStatistic.league.leagueOrder}
                                 rank={teamStatistic.rank}
                             />

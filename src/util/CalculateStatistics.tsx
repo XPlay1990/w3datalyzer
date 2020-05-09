@@ -147,7 +147,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                                         total: 0,
                                         win: 0,
                                         lose: 0,
-                                        winRate:NO_GAMES_TEXT
+                                        winRate: NO_GAMES_TEXT
                                     }
                                 }
                                 versusObject.total += 1
@@ -198,7 +198,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                                 // player.won
                             } else {
                                 // searched player
-                                if(player.updatedMmr) {
+                                if (player.updatedMmr) {
                                     mmrMap.set(new Date(match.endTime), Math.round(player.updatedMmr.rating))
                                 } else {
                                     mmrMap.set(new Date(match.endTime), Math.round(player.mmr.rating))
@@ -244,8 +244,8 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
                                     team.won ? savedTeam.stats.win += 1 : savedTeam.stats.lose += 1
                                     savedTeam.stats.total += 1
                                     savedTeam.stats.winRate =
-                                        savedTeam.stats.total?
-                                        ((savedTeam.stats.win / savedTeam.stats.total) * 100).toFixed(2)+ "%" : NO_GAMES_TEXT
+                                        savedTeam.stats.total ?
+                                            ((savedTeam.stats.win / savedTeam.stats.total) * 100).toFixed(2) + "%" : NO_GAMES_TEXT
                                 } else {
                                     savedTeam = {
                                         stats: {

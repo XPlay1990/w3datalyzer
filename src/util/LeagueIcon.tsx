@@ -4,8 +4,8 @@ import React from "react";
 import "./LeagueIcon.css"
 
 interface Input {
-    leagueId: number,
     leagueOrder: number,
+    leagueDivision?: number,
     rank: number
 }
 
@@ -14,7 +14,7 @@ export function LeagueIcon(input: Input) {
     return (
         <Box display={"flex"} flexDirection={"column"}>
             <Tooltip
-                title={`${getLeagueName(input.leagueOrder)}`}
+                title={`${getLeagueName(input.leagueOrder)} ${input.leagueDivision ? `Division ${input.leagueDivision}` : ""}`}
             >
                 <img src={`https://w3champions.com/leagues/${input.leagueOrder}.png`} alt={"League"}
                      className="LeagueIcon"
