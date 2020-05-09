@@ -55,7 +55,7 @@ function MapStats(input: StatisticInput) {
         }
 
         mapChartArray.push(
-            <Grid item sm={6} xs={12} key={mapChartArray.length}>
+            <Grid item md={6} xs={12} key={mapChartArray.length}>
                 <HorizontalBar data={data} options={options}/>
             </Grid>
         )
@@ -66,7 +66,7 @@ function MapStats(input: StatisticInput) {
     return (
         <Grid container spacing={3}>
             {mapWinRateOverviewChart}
-            <Grid item sm={6} xs={12}>
+            <Grid item md={6} xs={12}>
                 <CustomMapTable headers={headers} data={input.statistics.map}/>
             </Grid>
         </Grid>

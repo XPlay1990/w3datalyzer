@@ -90,7 +90,7 @@ function Overview(statistic: StatisticInput) {
             }
         }
         return (
-            <Grid item sm={6} xs={12}>
+            <Grid item md={6} xs={12}>
                 <Line data={data} options={options}/>
             </Grid>
         )
@@ -146,13 +146,13 @@ function Overview(statistic: StatisticInput) {
 
     return (
         <Grid container spacing={3}>
-            <Grid item sm={6} xs={12}>
+            <Grid item md={6} xs={12}>
                 <Bar data={mapOptions.data} options={mapOptions.options}/>
             </Grid>
-            <Grid item sm={6} xs={12}>
+            <Grid item md={6} xs={12}>
                 <CustomTable headers={headers} data={dataMap}/>
             </Grid>
-            <Grid item sm={6} xs={12}>
+            <Grid item md={6} xs={12}>
                 <CustomVersusTable headers={versusHeaders}
                                    data={statistic.statistics ? statistic.statistics.versus : new Map()}/>
             </Grid>

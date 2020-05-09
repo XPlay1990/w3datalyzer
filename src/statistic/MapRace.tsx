@@ -46,7 +46,7 @@ function MapRace(input: StatisticInput) {
                 };
 
                 raceMapChartArray.push(
-                    <Grid item sm={6} xs={12} style={{textAlign: "center"}} key={raceMapChartArray.length}>
+                    <Grid item md={6} xs={12} style={{textAlign: "center"}} key={raceMapChartArray.length}>
                         <Pie data={data} options={options}/>
                         <Typography
                             variant={"body1"}>Winrate: {((raceStatistic[1].won / raceStatistic[1].total) * 100).toFixed(2)}%</Typography>

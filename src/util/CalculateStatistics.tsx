@@ -2,13 +2,6 @@ import {Match, useGetMatchData} from "../api/ApiUtils";
 import {useEffect, useState} from "react";
 import {GAMEMODE_1v1, GAMEMODE_2v2_AT, NO_GAMES_TEXT} from "../resources/AppConstants";
 
-interface TimesAgainstRace {
-    elf: number
-    human: number
-    orc: number
-    undead: number
-}
-
 export interface MapStatistic {
     total: number,
     won: number,

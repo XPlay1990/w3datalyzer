@@ -26,7 +26,7 @@ function Header(darkModeState: DarkModeState) {
     return (
         <div className={"HeaderContainer"}>
             <Grid container spacing={3} className={"HeaderAppContainer"}>
-                <Grid item sm={6} xs={12} className="AppTitle">
+                <Grid item md={6} xs={12} className="AppTitle">
                     <Box display={"flex"} flexDirection={"row"}>
                         <EqualizerIcon className={"HeaderIcon"} fontSize={"large"}/>
                         <Typography variant={"h1"} style={{fontSize: '3rem',}}>
@@ -34,7 +34,7 @@ function Header(darkModeState: DarkModeState) {
                         </Typography>
                     </Box>
                 </Grid>
-                <Grid item sm={6} xs={12} style={{display: "flex", alignContent: "flex-end"}}>
+                <Grid item md={6} xs={12} style={{display: "flex", alignContent: "flex-end"}}>
                     <Tooltip title={"Change color mode"}>
                         <ToggleButtonGroup
                             value={darkModeState.isDarkMode}
