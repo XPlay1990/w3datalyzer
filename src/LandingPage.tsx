@@ -32,7 +32,9 @@ function LandingPage() {
     const [gateway, setGateway] = React.useState(GATEWAY_EU);
 
     const handleSetGateway = (newGateway: number) => {
-        setGateway(newGateway);
+        if (newGateway) {
+            setGateway(newGateway);
+        }
     };
 
     let history = useHistory()

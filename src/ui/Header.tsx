@@ -14,13 +14,15 @@ interface DarkModeState {
 function Header(darkModeState: DarkModeState) {
 
     function changeDarkMode(event: any, isDarkMode: string) {
-        darkModeState.setIsDarkMode(isDarkMode);
-        localStorage.setItem(IS_DARK_MODE, isDarkMode);
+        if (isDarkMode) {
+            darkModeState.setIsDarkMode(isDarkMode);
+            localStorage.setItem(IS_DARK_MODE, isDarkMode);
 
-        ReactGA.event({
-            category: "ChangeDisplayMode",
-            action: (isDarkMode === "true") ? 'dark' : 'light',
-        });
+            ReactGA.event({
+                category: "ChangeDisplayMode",
+                action: (isDarkMode === "true") ? 'dark' : 'light',
+            });
+        }
     }
 
     return (

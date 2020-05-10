@@ -19,8 +19,6 @@ function Statistics(props: any) {
         localStorage.setItem(STORAGE_BATTLETAG, battleTag)
     }, [statisticData])
 
-    console.log(statisticData)
-
     return (
         (statisticData.isLoading || playerStats.isLoading) ? (
             <Box display={"flex"} style={{justifyContent: "center"}}>
