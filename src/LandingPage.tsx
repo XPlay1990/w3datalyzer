@@ -43,7 +43,7 @@ function LandingPage() {
     useEffect(() => {
         if (playerTag.length > 2) {
             const fetchData = async () => {
-                const result = await fetchBattleTagCandidates(playerTag)
+                const result = await fetchBattleTagCandidates(playerTag, gateway)
                 setSuggestions(result.items);
             };
             fetchData();
@@ -51,19 +51,18 @@ function LandingPage() {
     }, [playerTag]);
 
     return (
-        <Grid container spacing={3}>
+        <Grid container spacing={3} direction={"column"}>
             <Grid item xs={12} sm={8}>
                 <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"}>
                     <Autocomplete
                         id="playerTag"
                         style={{width: 300, marginRight: "50px", marginBottom: "20px"}}
                         options={suggestions}
-                        debug
                         autoHighlight
+                        autoSelect={false}
                         filterOptions={(options, state) => {
                             return suggestions
                         }}
-
                         getOptionLabel={(option) => decodeURIComponent(option.battleTag)}
                         renderOption={(option) => (
                             <React.Fragment>
@@ -82,6 +81,9 @@ function LandingPage() {
                                 onChange={event => {
                                     setPlayerTag(event.target.value)
                                 }}
+                                onBlur={event =>
+                                    setSuggestions([])
+                                }
                             />
                         )}
                         onChange={(event: any, value: any) => setPlayerTag(value.battleTag)}
@@ -117,7 +119,7 @@ function LandingPage() {
                     </ToggleButtonGroup>
                 </Box>
             </Grid>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={4}>
                 <Typography variant={"body1"}>Got suggestions? Contact me at: <ReactGA.OutboundLink
                     eventLabel="Contact_Mail" to={'mailto:j_adamczyk@hotmail.com'}
                     rel="noopener noreferrer">

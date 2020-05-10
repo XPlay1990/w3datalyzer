@@ -44,24 +44,19 @@ interface Ranking {
     rp: number
 }
 
-export function fetchBattleTagCandidates(partialBattleTag: string) {
+export function fetchBattleTagCandidates(partialBattleTag: string, gateway:number) {
     const limit = 5
     const headers = new Headers()
     headers.append("Content-Type", "application/json");
 
     const options = {
-        url: `https://api.w3champions.com/leagues/20/1/find-player/${partialBattleTag}/?limit=${limit}`,
+        url: `https://api.w3champions.com/leagues/${gateway}/1/find-player/${partialBattleTag}/?limit=${limit}`,
         method: 'GET',
         mode: 'cors' as RequestMode,
         headers: headers
     }
 
     return createRequest(options)
-}
-
-export interface FetchData {
-    isLoading: boolean,
-    data: any
 }
 
 export function useGetMatchData(battleTag: string) {
