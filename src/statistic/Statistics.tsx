@@ -12,13 +12,14 @@ import {useGetPlayerStats} from "../api/ApiUtils";
 function Statistics(props: any) {
     const battleTag = decodeURIComponent(props.match.params.battleTag)
     const gateway = Number(decodeURIComponent(props.match.params.gateway)) || Number(DEFAULT_GATEWAY)
-    const statisticData = useCalculateStatistics(battleTag,gateway)
+    const statisticData = useCalculateStatistics(battleTag, gateway)
     const playerStats = useGetPlayerStats(battleTag)
 
     useEffect(() => {
         localStorage.setItem(STORAGE_BATTLETAG, battleTag)
     }, [statisticData])
 
+    console.log(statisticData)
 
     return (
         (statisticData.isLoading || playerStats.isLoading) ? (
@@ -34,8 +35,7 @@ function Statistics(props: any) {
                     gateway={gateway}
                 />
                 <TabBar/>
-                <StatisticsSwitch isLoading={statisticData.isLoading} statistics={statisticData.statistics}
-                                  total={statisticData.total}/>
+                <StatisticsSwitch isLoading={statisticData.isLoading} statistics={statisticData.statistics}/>
             </div>
         )
     )

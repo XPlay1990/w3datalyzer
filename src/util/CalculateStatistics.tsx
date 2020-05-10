@@ -45,7 +45,6 @@ interface VersusObject {
 
 export interface StatisticDataFetch {
     isLoading: boolean,
-    total: number,
     statistics: Statistic | undefined
 }
 
@@ -59,7 +58,6 @@ export interface Team2v2Statistics {
 export function useCalculateStatistics(playerBattleTag: string, gateway: number) {
     const playerMatchDataResponseList = useGetMatchData(playerBattleTag)
     const [statisticValues, setStatisticValues] = useState<StatisticDataFetch>({
-        total: 0,
         isLoading: true,
         statistics: undefined
     })
@@ -67,7 +65,7 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
     function calculateStatisticValues() {
         if (!(playerMatchDataResponseList.isLoading) && playerMatchDataResponseList.data.length > 0) {
             let playerMatchList: Match[] = []
-            const totalGames = playerMatchDataResponseList.data[0].total as number
+            // const totalGamesOnAllRealms = playerMatchDataResponseList.data[0].total as number
             for (let response of playerMatchDataResponseList.data) {
                 playerMatchList = playerMatchList.concat(response.items)
             }
@@ -75,7 +73,6 @@ export function useCalculateStatistics(playerBattleTag: string, gateway: number)
             let statistics = calculateMatchStatistics(playerMatchList)
 
             setStatisticValues({
-                total: totalGames,
                 statistics: statistics,
                 isLoading: playerMatchDataResponseList.isLoading
             })

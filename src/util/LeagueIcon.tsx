@@ -12,16 +12,24 @@ interface Input {
 export function LeagueIcon(input: Input) {
 
     return (
-        <Box display={"flex"} flexDirection={"column"}>
-            <Tooltip
-                title={`${getLeagueName(input.leagueOrder)} ${input.leagueDivision ? `Division ${input.leagueDivision}` : ""}`}
-            >
-                <img src={`https://w3champions.com/leagues/${input.leagueOrder}.png`} alt={"League"}
-                     className="LeagueIcon"
-                />
-            </Tooltip>
-            <Typography variant={"body1"} noWrap align={"center"}>Rank {input.rank}</Typography>
-        </Box>
+        input.leagueOrder > 0 ? (
+            <Box display={"flex"} flexDirection={"column"}>
+
+                <Tooltip
+                    title={`${getLeagueName(input.leagueOrder)} ${input.leagueDivision ? `Division ${input.leagueDivision}` : ""}`}
+                >
+                    <img src={`https://w3champions.com/leagues/${input.leagueOrder}.png`} alt={"League"}
+                         className="LeagueIcon"
+                    />
+                </Tooltip>
+                <Typography variant={"body1"} noWrap align={"center"}>Rank {input.rank}</Typography>
+            </Box>
+        ) : (
+            <Box display={"flex"} flexDirection={"column"}>
+
+                <Typography variant={"body1"} noWrap align={"center"}>unranked</Typography>
+            </Box>
+        )
     )
 }
 
