@@ -22,11 +22,10 @@ export function LeagueIcon(input: Input) {
                          className="LeagueIcon"
                     />
                 </Tooltip>
-                <Typography variant={"body1"} noWrap align={"center"}>Rank {input.rank}</Typography>
+                <Typography variant={"body1"} noWrap align={"center"} style={{overflow:"visible"}}>Rank {input.rank}</Typography>
             </Box>
         ) : (
             <Box display={"flex"} flexDirection={"column"}>
-
                 <Typography variant={"body1"} noWrap align={"center"}>unranked</Typography>
             </Box>
         )
