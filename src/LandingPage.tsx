@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import './App.css';
-import {Box, Button, Grid, ListItem, ListItemIcon, ListItemText, TextField, Typography} from "@material-ui/core";
+import {Box, Button, Grid, List, ListItem, ListItemIcon, ListItemText, TextField, Typography} from "@material-ui/core";
 import MailIcon from '@material-ui/icons/Mail';
 import SendIcon from '@material-ui/icons/Send';
 import {fetchBattleTagCandidates} from "./api/ApiUtils";
@@ -120,14 +120,33 @@ function LandingPage() {
                 </Box>
             </Grid>
             <Grid item xs={12} sm={4}>
-                <Typography variant={"body1"}>Got suggestions? Contact me at: <ReactGA.OutboundLink
-                    eventLabel="Contact_Mail" to={'mailto:j_adamczyk@hotmail.com'}
-                    rel="noopener noreferrer">
-                    <ListItem button key='Mail'>
-                        <ListItemIcon><MailIcon/></ListItemIcon>
-                        <ListItemText primary='j_adamczyk@hotmail.com'/>
-                    </ListItem>
-                </ReactGA.OutboundLink></Typography>
+                <Typography variant={"body1"}>Got suggestions? Contact me at: </Typography>
+                <List>
+                    <ReactGA.OutboundLink
+                        eventLabel="Discord" to={'https://discord.gg/SCv4s9'}
+                        rel="noopener noreferrer">
+                        <ListItem button key='Discord'>
+                            <ListItemIcon>
+                                <img
+                                    src={"https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png"}
+                                    alt={"Discord"}
+                                    style={{width: "45px", height: "auto"}}
+                                />
+                            </ListItemIcon>
+                            <ListItemText primary='Join me on Discord'/>
+                        </ListItem>
+                    </ReactGA.OutboundLink>
+                    <ReactGA.OutboundLink
+                        eventLabel="Contact_Mail" to={'mailto:j_adamczyk@hotmail.com'}
+                        rel="noopener noreferrer">
+                        <ListItem button key='Mail'>
+                            <ListItemIcon>
+                                <MailIcon style={{width: "40px", height: "auto"}}/>
+                            </ListItemIcon>
+                            <ListItemText primary='j_adamczyk@hotmail.com'/>
+                        </ListItem>
+                    </ReactGA.OutboundLink>
+                </List>
             </Grid>
         </Grid>
     );
