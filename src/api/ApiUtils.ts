@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {W3CHAMPIONS_API_BASE_URL} from "../resources/AppConstants";
+import {W3CHAMPIONS_API_BASE_URL, W3CHAMPIONS_STATISTICS_BASE_URL} from "../resources/AppConstants";
 
 export interface Match {
     createdAt: Date,
@@ -112,7 +112,7 @@ export function useGetPlayerStats(battleTag: string) {
         method: 'GET',
         mode: 'cors' as RequestMode,
         headers: headers,
-        url: `${W3CHAMPIONS_API_BASE_URL}/player/${encodeURIComponent(battleTag)}/stats`
+        url: `${W3CHAMPIONS_STATISTICS_BASE_URL}/players/${encodeURIComponent(battleTag)}`
     }
     return useFetchPlayerStats(options)
 }

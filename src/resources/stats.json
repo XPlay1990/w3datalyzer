@@ -1,106 +1,272 @@
 {
-  "account": "KnOfF#21435",
-  "data": {
-    "stats": {
-      "human": {
+  "JSON": {
+    "battleTag": "Grubby#1278",
+    "name": "Grubby",
+    "raceStats": [
+      {
+        "race": 1,
         "wins": 0,
-        "losses": 0
+        "losses": 1,
+        "games": 1,
+        "winrate": 0
       },
-      "orc": {
-        "wins": 104,
-        "losses": 83
+      {
+        "race": 2,
+        "wins": 246,
+        "losses": 80,
+        "games": 326,
+        "winrate": 0.754601226993865
       },
-      "undead": {
-        "wins": 0,
-        "losses": 0
+      {
+        "race": 8,
+        "wins": 2,
+        "losses": 0,
+        "games": 2,
+        "winrate": 1
       },
-      "night_elf": {
-        "wins": 1,
-        "losses": 1
+      {
+        "race": 4,
+        "wins": 2,
+        "losses": 3,
+        "games": 5,
+        "winrate": 0.4
       },
-      "random": {
-        "wins": 3,
-        "losses": 2
-      },
-      "total": {
-        "wins": 108,
-        "losses": 86
+      {
+        "race": 0,
+        "wins": 18,
+        "losses": 2,
+        "games": 20,
+        "winrate": 0.9
       }
-    },
-    "ladder": {
-      "1": {
-        "wins": 0,
-        "losses": 1
-      },
-      "2": {
-        "wins": 0,
-        "losses": 0
-      },
-      "3": {
-        "wins": 0,
-        "losses": 0
-      },
-      "4": {
-        "wins": 0,
-        "losses": 0
-      },
-      "5": {
-        "wins": 0,
-        "losses": 0
-      },
-      "6": {
-        "wins": 0,
-        "losses": 0
-      },
-      "7": {
-        "wins": 0,
-        "losses": 0
-      },
-      "8": {
-        "wins": 0,
-        "losses": 0
-      },
-      "10": {
-        "solo": {
-          "mmr": {
-            "rating": 1304.5157350785892,
-            "rd": 251.1808768967472,
-            "vol": 0.05999942269354743
+    ],
+    "gateWayStats": [
+      {
+        "gateWay": 10,
+        "gameModeStats": [
+          {
+            "mode": 1,
+            "mmr": 1708,
+            "rankingPoints": 3484,
+            "rank": 8,
+            "leagueId": 5,
+            "leagueOrder": 3,
+            "division": 2,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 3,
+            "losses": 2,
+            "games": 5,
+            "winrate": 0.6
           },
-          "ranking": {
-            "progress": 0.5,
-            "rp": 2609.0314701571783,
-            "lastGame": 1588175376823,
-            "rank": -1
+          {
+            "mode": 6,
+            "mmr": 0,
+            "rankingPoints": 0,
+            "rank": 0,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 0,
+            "losses": 0,
+            "games": 0,
+            "winrate": 0
           },
-          "wins": 0,
-          "losses": 1
-        }
+          {
+            "mode": 3,
+            "mmr": 0,
+            "rankingPoints": 0,
+            "rank": 0,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 0,
+            "losses": 0,
+            "games": 0,
+            "winrate": 0
+          },
+          {
+            "mode": 4,
+            "mmr": 0,
+            "rankingPoints": 0,
+            "rank": 0,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 0,
+            "losses": 0,
+            "games": 0,
+            "winrate": 0
+          }
+        ]
       },
-      "20": {
-        "solo": {
-          "mmr": {
-            "rating": 2036.751753718478,
-            "rd": 62.84369888864895,
-            "vol": 0.05994975803059726
+      {
+        "gateWay": 20,
+        "gameModeStats": [
+          {
+            "mode": 1,
+            "mmr": 2445,
+            "rankingPoints": 9782,
+            "rank": 2,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 245,
+            "losses": 81,
+            "games": 326,
+            "winrate": 0.7515337423312883
           },
-          "ranking": {
-            "progress": 0.7550000000000046,
-            "rp": 6150.990296229841,
-            "lastGame": 1588781719199,
-            "rank": 57,
-            "leagueId": 2,
-            "leagueOrder": 2
+          {
+            "mode": 6,
+            "mmr": 2093,
+            "rankingPoints": 4981,
+            "rank": 17,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 20,
+            "losses": 3,
+            "games": 23,
+            "winrate": 0.8695652173913043
           },
-          "league": {
-            "order": 2,
-            "name": "Diamond League",
-            "division": 1
+          {
+            "mode": 3,
+            "mmr": 0,
+            "rankingPoints": 0,
+            "rank": 0,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 0,
+            "losses": 0,
+            "games": 0,
+            "winrate": 0
           },
-          "wins": 90,
-          "losses": 78
-        }
+          {
+            "mode": 4,
+            "mmr": 0,
+            "rankingPoints": 0,
+            "rank": 0,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 0,
+            "losses": 0,
+            "games": 0,
+            "winrate": 0
+          }
+        ]
+      },
+      {
+        "gateWay": 30,
+        "gameModeStats": [
+          {
+            "mode": 1,
+            "mmr": 0,
+            "rankingPoints": 0,
+            "rank": 0,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 0,
+            "losses": 0,
+            "games": 0,
+            "winrate": 0
+          },
+          {
+            "mode": 6,
+            "mmr": 0,
+            "rankingPoints": 0,
+            "rank": 0,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 0,
+            "losses": 0,
+            "games": 0,
+            "winrate": 0
+          },
+          {
+            "mode": 3,
+            "mmr": 0,
+            "rankingPoints": 0,
+            "rank": 0,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 0,
+            "losses": 0,
+            "games": 0,
+            "winrate": 0
+          },
+          {
+            "mode": 4,
+            "mmr": 0,
+            "rankingPoints": 0,
+            "rank": 0,
+            "leagueId": 0,
+            "leagueOrder": 0,
+            "division": 0,
+            "rankingPointsProgress": {
+              "rankingPoints": 0,
+              "mmr": 0
+            },
+            "wins": 0,
+            "losses": 0,
+            "games": 0,
+            "winrate": 0
+          }
+        ]
       }
+    ],
+    "totalLosses": 86,
+    "totalWins": 268
+  },
+  "Antwortinhalt": {
+    "EDITOR_CONFIG": {
+      "text": "{\"battleTag\":\"Grubby#1278\",\"name\":\"Grubby\",\"raceStats\":[{\"race\":1,\"wins\":0,\"losses\":1,\"games\":1,\"winrate\":0},{\"race\":2,\"wins\":246,\"losses\":80,\"games\":326,\"winrate\":0.754601226993865},{\"race\":8,\"wins\":2,\"losses\":0,\"games\":2,\"winrate\":1},{\"race\":4,\"wins\":2,\"losses\":3,\"games\":5,\"winrate\":0.4},{\"race\":0,\"wins\":18,\"losses\":2,\"games\":20,\"winrate\":0.9}],\"gateWayStats\":[{\"gateWay\":10,\"gameModeStats\":[{\"mode\":1,\"mmr\":1708,\"rankingPoints\":3484,\"rank\":8,\"leagueId\":5,\"leagueOrder\":3,\"division\":2,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":3,\"losses\":2,\"games\":5,\"winrate\":0.6},{\"mode\":6,\"mmr\":0,\"rankingPoints\":0,\"rank\":0,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":0,\"losses\":0,\"games\":0,\"winrate\":0},{\"mode\":3,\"mmr\":0,\"rankingPoints\":0,\"rank\":0,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":0,\"losses\":0,\"games\":0,\"winrate\":0},{\"mode\":4,\"mmr\":0,\"rankingPoints\":0,\"rank\":0,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":0,\"losses\":0,\"games\":0,\"winrate\":0}]},{\"gateWay\":20,\"gameModeStats\":[{\"mode\":1,\"mmr\":2445,\"rankingPoints\":9782,\"rank\":2,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":245,\"losses\":81,\"games\":326,\"winrate\":0.7515337423312883},{\"mode\":6,\"mmr\":2093,\"rankingPoints\":4981,\"rank\":17,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":20,\"losses\":3,\"games\":23,\"winrate\":0.8695652173913043},{\"mode\":3,\"mmr\":0,\"rankingPoints\":0,\"rank\":0,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":0,\"losses\":0,\"games\":0,\"winrate\":0},{\"mode\":4,\"mmr\":0,\"rankingPoints\":0,\"rank\":0,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":0,\"losses\":0,\"games\":0,\"winrate\":0}]},{\"gateWay\":30,\"gameModeStats\":[{\"mode\":1,\"mmr\":0,\"rankingPoints\":0,\"rank\":0,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":0,\"losses\":0,\"games\":0,\"winrate\":0},{\"mode\":6,\"mmr\":0,\"rankingPoints\":0,\"rank\":0,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":0,\"losses\":0,\"games\":0,\"winrate\":0},{\"mode\":3,\"mmr\":0,\"rankingPoints\":0,\"rank\":0,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":0,\"losses\":0,\"games\":0,\"winrate\":0},{\"mode\":4,\"mmr\":0,\"rankingPoints\":0,\"rank\":0,\"leagueId\":0,\"leagueOrder\":0,\"division\":0,\"rankingPointsProgress\":{\"rankingPoints\":0,\"mmr\":0},\"wins\":0,\"losses\":0,\"games\":0,\"winrate\":0}]}],\"totalLosses\":86,\"totalWins\":268}",
+      "mode": "application/json"
     }
   }
 }

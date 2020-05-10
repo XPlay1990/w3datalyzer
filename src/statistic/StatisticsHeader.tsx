@@ -30,10 +30,33 @@ function StatisticsHeader(input: Input) {
 
     let history = useHistory()
 
-    const solo = input.playerStats.data.ladder[input.gateway]?.solo
-    const wins = Number(solo?.wins) || 0
-    const losses = Number(solo?.losses) || 0
-    const winrate = wins + losses > 0 ? ((wins / (wins + losses) * 100).toFixed(2) + "%") : NO_GAMES_TEXT
+    let wins: number = 0
+    let losses: number = 0
+    let winrate: string = NO_GAMES_TEXT
+    let mmr: number = 0
+    let rankingPoints: number = 0
+    let division: number = 0
+    let leagueOrder: number = 0
+    let rank: number = 0
+
+    const gateWayStats = input.playerStats.gateWayStats
+    for (const gatewayStat of gateWayStats) {
+        if (Number(gatewayStat.gateWay) === input.gateway) {
+            for (const gameModeStat of gatewayStat.gameModeStats) {
+                if (gameModeStat.mode === 1) {
+                    console.log(gameModeStat)
+                    wins = gameModeStat.wins
+                    losses = gameModeStat.losses
+                    winrate = (gameModeStat.winrate * 100).toFixed(2) + "%"
+                    rank = gameModeStat.rank
+                    rankingPoints = gameModeStat.rankingPoints
+                    mmr = gameModeStat.mmr
+                    division = gameModeStat.division
+                    leagueOrder = gameModeStat.leagueOrder
+                }
+            }
+        }
+    }
 
     useEffect(() => {
         switch (input.race) {
@@ -97,7 +120,7 @@ function StatisticsHeader(input: Input) {
                     </ReactGA.OutboundLink>
                 </Typography>
 
-                {solo ? (
+                {gateWayStats ? (
                         <Paper style={{
                             display: "flex",
                             flexDirection: "row",
@@ -109,14 +132,14 @@ function StatisticsHeader(input: Input) {
                             <Grid container spacing={2}>
                                 <Grid item sm={5}>
                                     <LeagueIcon
-                                        leagueDivision={solo?.league.division}
-                                        leagueOrder={solo?.league.order || -1}
-                                        rank={solo?.ranking.rank}
+                                        leagueDivision={division}
+                                        leagueOrder={leagueOrder}
+                                        rank={rank}
                                     />
                                 </Grid>
                                 <Grid item sm={7}>
-                                    <Typography variant={"body1"}>{solo.ranking.rp.toFixed(0)} rp</Typography>
-                                    <Typography variant={"body1"}>{solo.mmr.rating.toFixed(0)} mmr</Typography>
+                                    <Typography variant={"body1"}>{rankingPoints} rp</Typography>
+                                    <Typography variant={"body1"}>{mmr} mmr</Typography>
                                     <Box display={"flex"} flexDirection={"row"}>
                                         <Typography variant={"body1"} style={{color: "green"}}>{wins}</Typography>
                                         <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
