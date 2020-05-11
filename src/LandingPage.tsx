@@ -84,6 +84,7 @@ function LandingPage() {
                                 onBlur={event =>
                                     setSuggestions([])
                                 }
+                                placeholder={"e.g. Grubby#1278"}
                             />
                         )}
                         onChange={(event: any, value: any) => setPlayerTag(value.battleTag)}
