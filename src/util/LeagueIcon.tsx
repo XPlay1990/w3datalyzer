@@ -12,7 +12,7 @@ interface Input {
 export function LeagueIcon(input: Input) {
     return (
         input.rank !== 0 ? (
-            <Box display={"flex"} flexDirection={"column"}>
+            <Box display={"flex"} flexDirection={"column"} style={{height:"100px"}}>
                 <Tooltip
                     title={`${getLeagueName(input.leagueOrder)} ${input.leagueDivision ? `Division ${input.leagueDivision}` : ""}`}
                 >
@@ -21,7 +21,7 @@ export function LeagueIcon(input: Input) {
                     />
                 </Tooltip>
                 <Typography variant={"body1"} noWrap align={"center"}
-                            style={{overflow: "visible"}}>Rank {input.rank}</Typography>
+                            style={{overflow: "visible", wordBreak:"break-word"}}>Rank {input.rank}</Typography>
             </Box>
         ) : (
             <Box display={"flex"} flexDirection={"column"}>

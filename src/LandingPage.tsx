@@ -123,7 +123,7 @@ function LandingPage() {
                 <Typography variant={"body1"}>Got suggestions? Contact me at: </Typography>
                 <List>
                     <ReactGA.OutboundLink
-                        eventLabel="Discord" to={'https://discord.gg/SCv4s9'}
+                        eventLabel="Discord" to={'https://discord.gg/pB3XBsc'}
                         rel="noopener noreferrer">
                         <ListItem button key='Discord'>
                             <ListItemIcon>

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import '../App.css';
 import {APP_PATH_LandingPage, NO_GAMES_TEXT, W3CHAMPIONS_PROFILE_URL} from "../resources/AppConstants";
 import './Statistic.css'
-import {Box, Button, Grid, Paper, Typography} from "@material-ui/core";
+import {Box, Button, Paper, Typography} from "@material-ui/core";
 import ReactGA from "react-ga";
 import RdmImage from "../resources/rdm.jpg";
 import OrcImage from "../resources/orc.jpg";
@@ -125,31 +125,26 @@ function StatisticsHeader(input: Input) {
                             display: "flex",
                             flexDirection: "row",
                             justifyContent: "center",
-                            width: "auto",
                             flexWrap: "wrap",
                             padding: "10px"
                         }}>
-                            <Grid container spacing={2}>
-                                <Grid item sm={5}>
-                                    <LeagueIcon
-                                        leagueDivision={division}
-                                        leagueOrder={leagueOrder}
-                                        rank={rank}
-                                    />
-                                </Grid>
-                                <Grid item sm={7}>
-                                    <Typography variant={"body1"}>{rankingPoints} rp</Typography>
-                                    <Typography variant={"body1"}>{mmr} mmr</Typography>
-                                    <Box display={"flex"} flexDirection={"row"}>
-                                        <Typography variant={"body1"} style={{color: "green"}}>{wins}</Typography>
-                                        <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
-                                        <Typography variant={"body1"} style={{color: "red"}}>{losses}</Typography>
-                                        <div className="SoloBorder">
-                                            <Typography variant={"body1"}>{winrate}</Typography>
-                                        </div>
-                                    </Box>
-                                </Grid>
-                            </Grid>
+                            <LeagueIcon
+                                leagueDivision={division}
+                                leagueOrder={leagueOrder}
+                                rank={rank}
+                            />
+                            <Box display={"flex"} flexDirection={"column"} style={{justifyContent:"center", marginLeft:"10px"}}>
+                                <Typography variant={"body1"}>{rankingPoints} rp</Typography>
+                                <Typography variant={"body1"}>{mmr} mmr</Typography>
+                                <Box display={"flex"} flexDirection={"row"}>
+                                    <Typography variant={"body1"} style={{color: "green"}}>{wins}</Typography>
+                                    <Typography variant={"body1"} style={{color: "grey"}}> / </Typography>
+                                    <Typography variant={"body1"} style={{color: "red"}}>{losses}</Typography>
+                                    <div className="SoloBorder">
+                                        <Typography variant={"body1"}>{winrate}</Typography>
+                                    </div>
+                                </Box>
+                            </Box>
                         </Paper>
                     )
                     : null
