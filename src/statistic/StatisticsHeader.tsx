@@ -40,24 +40,25 @@ function StatisticsHeader(input: Input) {
     let rank: number = 0
 
     const gateWayStats = input.playerStats.gateWayStats
-    for (const gatewayStat of gateWayStats) {
-        if (Number(gatewayStat.gateWay) === input.gateway) {
-            for (const gameModeStat of gatewayStat.gameModeStats) {
-                if (gameModeStat.mode === 1) {
-                    console.log(gameModeStat)
-                    wins = gameModeStat.wins
-                    losses = gameModeStat.losses
-                    winrate = (gameModeStat.winrate * 100).toFixed(2) + "%"
-                    rank = gameModeStat.rank
-                    rankingPoints = gameModeStat.rankingPoints
-                    mmr = gameModeStat.mmr
-                    division = gameModeStat.division
-                    leagueOrder = gameModeStat.leagueOrder
+    if (gateWayStats) {
+        for (const gatewayStat of gateWayStats) {
+            if (Number(gatewayStat.gateWay) === input.gateway) {
+                for (const gameModeStat of gatewayStat.gameModeStats) {
+                    if (gameModeStat.mode === 1) {
+                        console.log(gameModeStat)
+                        wins = gameModeStat.wins
+                        losses = gameModeStat.losses
+                        winrate = (gameModeStat.winrate * 100).toFixed(2) + "%"
+                        rank = gameModeStat.rank
+                        rankingPoints = gameModeStat.rankingPoints
+                        mmr = gameModeStat.mmr
+                        division = gameModeStat.division
+                        leagueOrder = gameModeStat.leagueOrder
+                    }
                 }
             }
         }
     }
-
     useEffect(() => {
         switch (input.race) {
             case 0:
@@ -133,7 +134,8 @@ function StatisticsHeader(input: Input) {
                                 leagueOrder={leagueOrder}
                                 rank={rank}
                             />
-                            <Box display={"flex"} flexDirection={"column"} style={{justifyContent:"center", marginLeft:"10px"}}>
+                            <Box display={"flex"} flexDirection={"column"}
+                                 style={{justifyContent: "center", marginLeft: "10px"}}>
                                 <Typography variant={"body1"}>{rankingPoints} rp</Typography>
                                 <Typography variant={"body1"}>{mmr} mmr</Typography>
                                 <Box display={"flex"} flexDirection={"row"}>
