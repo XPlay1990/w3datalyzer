@@ -20,3 +20,4 @@ phases:
         > imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
+  name: w3datalyzer
