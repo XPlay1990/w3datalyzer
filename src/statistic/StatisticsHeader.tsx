@@ -40,6 +40,7 @@ function StatisticsHeader(input: Input) {
     let rank: number = 0
 
     const gateWayStats = input.playerStats.gateWayStats
+    console.log(input.playerStats)
     if (gateWayStats) {
         for (const gatewayStat of gateWayStats) {
             if (Number(gatewayStat.gateWay) === input.gateway) {
